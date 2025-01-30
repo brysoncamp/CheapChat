@@ -9,6 +9,8 @@ import { Link } from './Link'
 import './css/index.css'
 import './Layout.css'
 
+import { AuthProvider, useAuth } from "../components/AuthProvider/AuthProvider";
+
 Layout.propTypes = {
   pageContext: PropTypes.any,
   children: childrenPropType
@@ -17,15 +19,17 @@ function Layout({ pageContext, children }) {
   return (
     <React.StrictMode>
       <PageContextProvider pageContext={pageContext}>
-        <Frame>
-          <Sidebar>
-            <Logo />
-            <Link href="/">Welcome</Link>
-            <Link href="/about">About</Link>
-            <Link href="/star-wars">Data Fetching</Link>
-          </Sidebar>
-          <Content>{children}</Content>
-        </Frame>
+        <AuthProvider>
+          <Frame>
+            <Sidebar>
+              <Logo />
+              <Link href="/">Credits</Link>
+              <Link href="/account">Account</Link>
+              <Link href="/star-wars">Data Fetching</Link>
+            </Sidebar>
+            <Content>{children}</Content>
+          </Frame>
+        </AuthProvider>
       </PageContextProvider>
     </React.StrictMode>
   )
