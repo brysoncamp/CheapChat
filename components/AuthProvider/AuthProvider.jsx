@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentUser, signOut as signOutUser } from "aws-amplify/auth";
+import { getCurrentUser, signOut as signOutUser, fetchAuthSession } from "aws-amplify/auth";
 import { Authenticator } from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css';
 import "./AuthProvider.css"; 
@@ -11,22 +11,27 @@ Amplify.configure(awsconfig);
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // ✅ User info only
+  const [authState, setAuthState] = useState({ token: null, expiry: null }); // ✅ Separate token storage
   const [loading, setLoading] = useState(true);
   const [showAuth, setShowAuth] = useState(false);
-  const [fadeIn, setFadeIn] = useState(false); // New state for transition
 
   useEffect(() => {
     async function checkAuth() {
       try {
         const authenticatedUser = await getCurrentUser();
-        setUser(authenticatedUser);
-        console.log("User authenticated:", authenticatedUser);
+        const session = await fetchAuthSession();
+        const token = session.tokens?.idToken?.toString() || null; // ✅ Now using ID Token
+        const expiry = session.tokens?.idToken?.payload.exp * 1000; // ✅ Convert to ms
+
+        setUser(authenticatedUser); // ✅ Store user separately
+        setAuthState({ token, expiry }); // ✅ Store token separately
+
+        console.log("✅ User authenticated:", authenticatedUser);
+        console.log("✅ JWT Token (ID Token):", token);
       } catch (error) {
-        console.log("No user found, showing Authenticator");
+        console.log("❌ No user found, showing Authenticator");
         setShowAuth(true);
-        // Delay adding the "active" class to allow transition
-        setTimeout(() => setFadeIn(true), 10);
       } finally {
         setLoading(false);
       }
@@ -34,20 +39,56 @@ export function AuthProvider({ children }) {
     checkAuth();
   }, []);
 
+  /**
+   * Ensures the token is valid, refreshing it if necessary.
+   * @returns {Promise<string|null>} - The valid token or null if refresh fails.
+   */
+  async function ensureValidToken() {
+    if (!authState.token) {
+      console.error("❌ No token found");
+      return null;
+    }
+
+    const now = Date.now();
+    const expiresInMs = (authState.expiry || 0) - now;
+
+    // ✅ Refresh token if it's expiring in <60 sec
+    if (expiresInMs < 60000) {
+      console.log("🔄 Refreshing token...");
+
+      try {
+        const session = await fetchAuthSession();
+        const newToken = session.tokens?.idToken?.toString(); // ✅ Get new ID Token
+        const expiry = session.tokens?.idToken?.payload.exp * 1000; // ✅ Convert to ms
+
+        console.log("✅ Token refreshed successfully:", newToken);
+
+        // ✅ Update token state
+        setAuthState({ token: newToken, expiry });
+
+        return newToken;
+      } catch (error) {
+        console.error("❌ Failed to refresh token:", error);
+        return null;
+      }
+    }
+
+    return authState.token; // ✅ Token is still valid
+  }
+
   const signOut = async () => {
     await signOutUser();
     setUser(null);
+    setAuthState({ token: null, expiry: null }); // ✅ Clear token state
     setShowAuth(true);
-    setTimeout(() => setFadeIn(true), 10);
   };
 
   return (
-    <AuthContext.Provider value={{ user, signOut }}>
+    <AuthContext.Provider value={{ user, authState, setAuthState, signOut, ensureValidToken }}>
       {children}
 
-      {/* Ensure overlay is rendered but starts invisible */}
       {showAuth && (
-        <div className={`auth-overlay ${fadeIn ? "active" : ""}`}>
+        <div className="auth-overlay">
           <div className="auth-container">
             <Authenticator
               loginMechanisms={["email"]}
@@ -58,7 +99,6 @@ export function AuthProvider({ children }) {
               {({ user, signOut }) => {
                 setUser(user);
                 setShowAuth(false);
-                setFadeIn(false);
                 return null;
               }}
             </Authenticator>

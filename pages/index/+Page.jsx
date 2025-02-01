@@ -2,6 +2,8 @@ export { Page };
 
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import { useAuth } from '../../components/AuthProvider/AuthProvider';
+
 
 const stripePromise = loadStripe("pk_test_51Qn6p4RoO280mx7jwfqkc7gummGs3CyKz5DPUgDVvzgh0faWbQCd6xZszEMfZbw88OsvZnM7EUd5msyNSslt3xu4000T32JdeY");
 
@@ -10,6 +12,8 @@ function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const { ensureValidToken, user } = useAuth();
+
   const handlePayment = async () => {
     setLoading(true);
     setError("");
@@ -17,13 +21,22 @@ function Page() {
     try {
       console.log("Starting payment request with amount:", amount);
 
+      const token = await ensureValidToken();
+      if (!token) {
+        throw new Error("Unauthorized: Failed to get authentication token.");
+      }
+
       const response = await fetch("https://api.cheap.chat/createPaymentSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
           "Origin": window.location.origin
         },
-        body: JSON.stringify({ amount: Number(amount), userId: "test-user-123" })
+        body: JSON.stringify({ 
+          amount: Number(amount), 
+          userId: user?.userId || "unknown"
+        })
       });
 
       const data = await response.json();

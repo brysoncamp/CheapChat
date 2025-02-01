@@ -9,6 +9,8 @@ function Page() {
   // If user is not logged in, show nothing
   if (!user) return null;
 
+  console.log("User Data:", user);
+
   return (
     <div>
       <h1>Welcome, {user.username}</h1>
