@@ -1,28 +1,22 @@
-// https://vike.dev/onRenderHtml
-export { onRenderHtml }
+export { onRenderHtml };
 
-import ReactDOMServer from 'react-dom/server'
-import { Layout } from './Layout'
-import { escapeInject, dangerouslySkipEscape } from 'vike/server'
-import logoUrl from './logo.svg'
-import { getPageTitle } from './getPageTitle'
+import ReactDOMServer from "react-dom/server";
+import { Layout } from "../src/components/Layout/Layout";
+import { escapeInject, dangerouslySkipEscape } from "vike/server";
+import logoUrl from "/logo.svg";
 
-function onRenderHtml(pageContext) {
-  const { Page } = pageContext
+const onRenderHtml = (pageContext) => {
+  const { Page } = pageContext;
+  if (!Page) throw new Error("onRenderHtml expects pageContext.Page to be defined");
 
-  // This onRenderHtml() hook only supports SSR, see https://vike.dev/render-modes for how to modify
-  // onRenderHtml() to support SPA
-  if (!Page) throw new Error('My onRenderHtml() hook expects pageContext.Page to be defined')
-
-  // Alternatively, we can use an HTML stream, see https://vike.dev/streaming
   const pageHtml = ReactDOMServer.renderToString(
     <Layout pageContext={pageContext}>
       <Page />
     </Layout>
-  )
+  );
 
-  const title = getPageTitle(pageContext)
-  const desc = pageContext.data?.description || pageContext.config.description || 'Demo of using Vike'
+  const title = pageContext.exports?.title || "CheapChat - Any AI, No Subscriptions";
+  const desc = pageContext.exports?.description || "Access AI like GPT-4, Claude, and Gemini without subscriptions. Just pay for what you use.";
 
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">
@@ -36,12 +30,7 @@ function onRenderHtml(pageContext) {
       <body>
         <div id="react-root">${dangerouslySkipEscape(pageHtml)}</div>
       </body>
-    </html>`
+    </html>`;
 
-  return {
-    documentHtml,
-    pageContext: {
-      // We can add custom pageContext properties here, see https://vike.dev/pageContext#custom
-    }
-  }
-}
+  return { documentHtml, pageContext: {} };
+};

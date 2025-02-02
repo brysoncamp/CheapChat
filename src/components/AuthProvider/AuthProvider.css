@@ -41,12 +41,52 @@
     transform: scale(1);
 }
 
+.close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    border: none;
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    z-index: 1;
+    border-radius: 1.25rem;
+}
+
+.close-button:hover {
+    background-color: #efefef;
+}
+
+
+
 
 /* below */
-
 
 [data-amplify-router] {
     border: none !important;
     box-shadow: none !important;
 }
+
+/*
+[data-amplify-router] {
+    border: none !important;
+    box-shadow: none !important;
+}
   
+
+.amplify-input {
+    /*border: 1px solid #e8eaed;*//*
+}
+
+.amplify-button--primary {
+    background-color: #4078ed;
+}
+
+.amplify-divider {
+    margin: 1.25rem 0;
+}
+
+.amplify-button--link {
+    color: #223c74;
+}*/
+

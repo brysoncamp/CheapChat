@@ -1,0 +1,1 @@
+export default "Manage your CheapChat account, view usage, and update your preferences.";

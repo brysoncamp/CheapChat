@@ -5,7 +5,7 @@ export default {
   plugins: [
     react(),
     vike({
-      prerender: true  
+      prerender: true
     })
   ],
   base: '/'

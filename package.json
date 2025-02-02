@@ -1,11 +1,9 @@
 {
   "scripts": {
-    "dev": "npm run server:dev",
-    "prod": "npm run build && npm run server:prod",
+    "dev": "vike dev",
     "build": "vike build",
-    "deploy": "gh-pages -d dist/client",
-    "server:dev": "node ./server",
-    "server:prod": "cross-env NODE_ENV=production node ./server"
+    "preview": "vike preview",
+    "deploy": "gh-pages -d dist/client"
   },
   "dependencies": {
     "@aws-amplify/auth": "^6.10.1",
