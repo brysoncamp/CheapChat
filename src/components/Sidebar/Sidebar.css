@@ -1,0 +1,113 @@
+.sidebar {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.8em;
+    padding: 0 2rem;
+    width: 15rem;
+    align-items: center;
+}
+
+.sidebar-closed {
+    width: 5rem;
+}
+
+.divider {
+    width: 1rem;
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.divider-line {
+    width: 0.5rem;
+    height: 100%;
+    transition: width 0.15s ease-in-out;
+    border-right: 1px solid #ebeef1;
+}
+
+
+
+.divider-button {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Animate divider movement */
+
+.divider:has(.divider-button:hover) .divider-line {
+    width: 0;
+}
+
+.sidebar-closed + .divider:has(.divider-button:hover) .divider-line {
+    width: 1rem;
+}
+
+/* Arrow animation set-up */
+
+.arrow-container {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    position: absolute;
+    width: 2px;
+    height: 8px; 
+    background-color: #b6c0cd;
+    border-radius: 2px;
+    transition: transform 0.15s ease-in-out, height 0.15s ease-in-out, left 0.15s ease-in-out;
+}
+
+.line-top {
+    bottom: 48%;
+    transform-origin: bottom center;
+    left: 0;
+}
+
+.line-bottom {
+    top: 48%; 
+    transform-origin: top center; 
+    left: 0;
+}
+
+/* Closing arrow animation */
+
+.divider-button:hover .line-top {
+    transform: rotate(45deg);
+    height: 10px;
+    left: -8px;
+    background-color: #717b8a;
+}
+
+.divider-button:hover .line-bottom {
+    transform: rotate(-45deg);
+    height: 10px;
+    left: -8px;
+    background-color: #717b8a;
+}
+
+/* Opening arrow animation */
+
+.sidebar-closed + .divider .divider-button:hover .line-top {
+    transform: rotate(-45deg);
+    height: 10px;
+    left: 14px;
+    background-color: #717b8a;
+}
+
+.sidebar-closed + .divider .divider-button:hover .line-bottom {
+    transform: rotate(45deg);
+    height: 10px;
+    left: 14px;
+    background-color: #717b8a;
+}

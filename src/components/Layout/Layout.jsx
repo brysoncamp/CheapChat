@@ -2,57 +2,26 @@ export { Layout };
 
 import React from "react";
 import logoUrl from "/logo.svg";
-import "./css/index.css";
 import "../../styles/global.css";
 
 import { AuthProvider } from "../AuthProvider/AuthProvider";
+import Flex from "../Flex/Flex";
+import Sidebar from "../Sidebar/Sidebar";
 
 function Layout({ children }) {
   return (
     <React.StrictMode>
       <AuthProvider>
-        <Frame>
+        <Flex>
           <Sidebar>
             <Logo />
             <a href="/">Credits</a>
             <a href="/account">Account</a>
           </Sidebar>
           <Content>{children}</Content>
-        </Frame>
+        </Flex>
       </AuthProvider>
     </React.StrictMode>
-  );
-}
-
-function Frame({ children }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        maxWidth: 900,
-        margin: "auto",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function Sidebar({ children }) {
-  return (
-    <div
-      id="sidebar"
-      style={{
-        padding: 20,
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        lineHeight: "1.8em",
-        borderRight: "2px solid #eee",
-      }}
-    >
-      {children}
-    </div>
   );
 }
 
