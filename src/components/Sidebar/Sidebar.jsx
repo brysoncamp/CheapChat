@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import logoUrl from "/logo.svg";
 import "./Sidebar.css";
 
 const Sidebar = ({ children }) => {
@@ -9,7 +10,10 @@ const Sidebar = ({ children }) => {
   return (
     <>
       <div className={`sidebar ${isClosed ? 'sidebar-closed' : ''}`}>
-        { children }
+        <a className="logo-container" href="/">
+          <img className="logo" src={logoUrl} alt="logo" />
+          <p className="logo-name">CheapChat</p>
+        </a>
       </div>
       <div className="divider">
         <div className="divider-line"></div>

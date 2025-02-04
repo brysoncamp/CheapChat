@@ -1,96 +1,53 @@
-export { Page };
+import { useRef, useEffect, useState } from "react";
+import "./Page.css";
+import plusUrl from "./plus.svg";
+import sendUrl from "./send.svg";
 
-import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import { useAuth } from '../../components/AuthProvider/AuthProvider';
+const Page = () => {
+  const textAreaRef = useRef(null);
+  const inputRef = useRef(null);
+  const [hasText, setHasText] = useState(false);
 
+  useEffect(() => {
+    const textArea = textAreaRef.current;
+    const inputContainer = inputRef.current;
 
-const stripePromise = loadStripe("pk_test_51Qn6p4RoO280mx7jwfqkc7gummGs3CyKz5DPUgDVvzgh0faWbQCd6xZszEMfZbw88OsvZnM7EUd5msyNSslt3xu4000T32JdeY");
+    const adjustHeight = () => {
+      if (!textArea) return;
 
-function Page() {
-  const [amount, setAmount] = useState(""); 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+      textArea.style.height = "auto"; // Reset height to recalculate
+      textArea.style.height = `${textArea.scrollHeight}px`; // Expand dynamically
+      inputContainer.style.height = `${textArea.scrollHeight + 30}px`; // Adjust parent container
 
-  const { ensureValidToken, user } = useAuth();
+      // Track if there's text inside (ignoring spaces)
+      setHasText(textArea.value.trim() !== "");
+    };
 
-  const handlePayment = async () => {
-    setLoading(true);
-    setError("");
+    textArea.addEventListener("input", adjustHeight);
+    adjustHeight(); // Initialize height on mount
 
-    try {
-      console.log("Starting payment request with amount:", amount);
-
-      const token = await ensureValidToken();
-      if (!token) {
-        throw new Error("Unauthorized: Failed to get authentication token.");
-      }
-
-      const response = await fetch("https://api.cheap.chat/createPaymentSession", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-          "Origin": window.location.origin
-        },
-        body: JSON.stringify({ 
-          amount: Number(amount), 
-          userId: user?.userId || "unknown"
-        })
-      });
-
-      const data = await response.json();
-      console.log("Response from API:", data);
-
-      if (!response.ok || !data.id) {
-        throw new Error(data.error || "Failed to create checkout session");
-      }
-
-      const stripe = await stripePromise;
-      if (!stripe) {
-        throw new Error("Stripe failed to initialize");
-      }
-      await stripe.redirectToCheckout({ sessionId: data.id });
-
-    } catch (err) {
-      console.error("Payment error:", err);
-      setError(err.message);
-      setLoading(false);
-    }
-  };
+    return () => textArea.removeEventListener("input", adjustHeight);
+  }, []);
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>Buy CheapChat Credits</h1>
-      <p>Enter the amount (in USD) you want to purchase:</p>
-
-      <input
-        type="number"
-        placeholder="Enter amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        style={{ padding: "10px", margin: "10px", fontSize: "16px", width: "200px" }}
-      />
-
-      <br />
-
-      <button
-        onClick={handlePayment}
-        disabled={!amount || loading}
-        style={{
-          backgroundColor: loading ? "#ccc" : "#007bff",
-          color: "white",
-          padding: "10px 20px",
-          fontSize: "18px",
-          border: "none",
-          cursor: loading ? "not-allowed" : "pointer",
-          borderRadius: "5px"
-        }}
-      >
-        {loading ? "Processing..." : "Proceed to Payment"}
-      </button>
-
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+    <div className="page">
+      <div className="body"></div>
+      <div className="input" ref={inputRef}>
+        <button className="add-button">
+          <img className="plus-icon" src={plusUrl} alt="plus" />
+        </button>
+        <textarea
+          ref={textAreaRef}
+          rows="1"
+          className="input-text"
+          placeholder="Chat with GPT-4o"
+        />
+        <button className={`send-button ${hasText ? "send-active" : ""}`}>
+          <img className="send-icon" src={sendUrl} alt="send" />
+        </button>
+      </div>
     </div>
   );
-}
+};
+
+export default Page;
