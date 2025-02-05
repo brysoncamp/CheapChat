@@ -18,9 +18,9 @@ const Sidebar = ({ children }) => {
       <div className="divider">
         <div className="divider-line"></div>
         <div className="divider-button" onClick={() => setIsClosed(!isClosed)}>
-          <div class="arrow-container">
-            <div class="line line-top"></div>
-            <div class="line line-bottom"></div>
+          <div className="arrow-container">
+            <div className="line line-top"></div>
+            <div className="line line-bottom"></div>
           </div>
         </div>
       </div>
