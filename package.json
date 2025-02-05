@@ -3,7 +3,8 @@
     "dev": "vike dev",
     "build": "vike build",
     "preview": "vike preview",
-    "deploy": "gh-pages -d dist/client"
+    "deploy": "gh-pages -d dist/client",
+    "deploy:test": "echo 'test.cheap.chat' > dist/client/CNAME && gh-pages -d dist/client -b gh-pages-test"
   },
   "dependencies": {
     "@aws-amplify/auth": "^6.10.1",

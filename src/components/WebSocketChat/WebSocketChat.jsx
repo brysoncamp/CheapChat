@@ -2,6 +2,10 @@ import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from "re
 import { fetchAuthSession } from "aws-amplify/auth";
 
 import "./WebSocketChat.css";
+import openaiUrl from "./openai.svg";
+
+import UserMessageOptions from "../UserMessageOptions/UserMessageOptions";
+import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 
@@ -52,7 +56,7 @@ const WebSocketChat = forwardRef((props, ref) => {
 
               const finalMessage = latestMessageRef.current.trim();
               if (finalMessage) {
-                setMessages((prev) => [...prev, { sender: "AI", text: finalMessage }]);
+                setMessages((prev) => [...prev, { sender: "ai-message", text: finalMessage }]);
               }
 
               setCurrentMessage(""); // ✅ Clear buffer for next message
@@ -87,7 +91,7 @@ const WebSocketChat = forwardRef((props, ref) => {
       socket.send(JSON.stringify(payload));
 
       // ✅ Store the user's message separately
-      setMessages((prev) => [...prev, { sender: "user", text: message }]);
+      setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
 
       // ✅ Reset AI response buffer for new AI response
       setCurrentMessage("");
@@ -103,9 +107,41 @@ const WebSocketChat = forwardRef((props, ref) => {
   return (
     <div className="messages-container">
       {messages.map((msg, i) => (
-        <p className={`message ${msg.sender}`} key={i}>{msg.text}</p> // ✅ Display messages properly
+        <div className="message-container" key={i}>
+          <div className="message-container-inner">
+            {msg.sender === "user-message" ? (
+              <div className="user-message-container">
+                <p className="message user-message" key={i}>{msg.text}</p>
+                <UserMessageOptions />
+              </div>
+            ) : (
+              <div className="ai-message-wrapper">
+                <div className="ai-message-icon">
+                  <img src={openaiUrl} alt="OpenAI" />
+                </div>
+                <div className="ai-message-container">
+                  <p className="message ai-message" key={i}>{msg.text}</p>
+                  <AIMessageOptions  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       ))}
-      {currentMessage && <p>{currentMessage}</p>} {/* ✅ Show AI message while streaming */}
+      {currentMessage && (
+        <div className="message-container">
+          <div className="message-container-inner">
+            <div className="ai-message-wrapper">
+              <div className="ai-message-icon">
+                <img src={openaiUrl} alt="OpenAI" />
+              </div>
+              <div className="ai-message-container">
+                <p className="message ai-message">{currentMessage}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });
