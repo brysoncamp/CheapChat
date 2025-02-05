@@ -10,7 +10,14 @@
     overflow: hidden;
     min-height: 4rem;
     max-height: 22rem;
+
+    width: 90%;
+    max-width: 50rem;
 }
+
+
+
+
 
 .input-container:hover {
     background-color: #edeeee;

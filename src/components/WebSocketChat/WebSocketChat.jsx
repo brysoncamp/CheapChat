@@ -1,6 +1,8 @@
 import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
 
+import "./WebSocketChat.css";
+
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 
 const WebSocketChat = forwardRef((props, ref) => {
@@ -85,7 +87,7 @@ const WebSocketChat = forwardRef((props, ref) => {
       socket.send(JSON.stringify(payload));
 
       // ✅ Store the user's message separately
-      setMessages((prev) => [...prev, { sender: "User", text: message }]);
+      setMessages((prev) => [...prev, { sender: "user", text: message }]);
 
       // ✅ Reset AI response buffer for new AI response
       setCurrentMessage("");
@@ -99,15 +101,11 @@ const WebSocketChat = forwardRef((props, ref) => {
   }));
 
   return (
-    <div>
-      <h2>WebSocket Chat</h2>
-      <p>Session ID: {sessionId}</p>
-      <div>
-        {messages.map((msg, i) => (
-          <p key={i}><strong>{msg.sender}:</strong> {msg.text}</p> // ✅ Display messages properly
-        ))}
-        {currentMessage && <p><strong>AI (typing...):</strong> {currentMessage}</p>} {/* ✅ Show AI message while streaming */}
-      </div>
+    <div className="messages-container">
+      {messages.map((msg, i) => (
+        <p className={`message ${msg.sender}`} key={i}>{msg.text}</p> // ✅ Display messages properly
+      ))}
+      {currentMessage && <p>{currentMessage}</p>} {/* ✅ Show AI message while streaming */}
     </div>
   );
 });
