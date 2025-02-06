@@ -7,6 +7,7 @@ const Page = () => {
   const [inputValue, setInputValue] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const webSocketChatRef = useRef(null); // ✅ Create ref for WebSocketChat
+  const bodyRef = useRef(null);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -28,8 +29,9 @@ const Page = () => {
 
   return (
     <div className="page">
-      <div className="body">
-        <WebSocketChat ref={webSocketChatRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} /> {/* ✅ Pass ref */}
+      <div className="body" ref={bodyRef}>
+        <div className="topbar"></div>
+        <WebSocketChat ref={webSocketChatRef} bodyRef={bodyRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} /> {/* ✅ Pass ref */}
       </div>
       <InputContainer inputValue={inputValue} setInputValue={setInputValue} isStreaming={isStreaming} onSend={handleSendMessage} onStop={handleStopMessage} />
     </div>

@@ -7,9 +7,13 @@ import openaiUrl from "./openai.svg";
 import UserMessageOptions from "../UserMessageOptions/UserMessageOptions";
 import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
 
+import DOMPurify from "dompurify";
+import { marked } from "marked";
+
+
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 
-const WebSocketChat = forwardRef(({ isStreaming, setIsStreaming }, ref) => {
+const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref) => {
   const [socket, setSocket] = useState(null);
   const [messages, setMessages] = useState([]);
   const [sessionId, setSessionId] = useState(null);
@@ -137,48 +141,94 @@ const WebSocketChat = forwardRef(({ isStreaming, setIsStreaming }, ref) => {
     cancelMessage,
   }));
 
+  const [isUserAtBottom, setIsUserAtBottom] = useState(true);
+
+  useEffect(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+  
+    const handleScroll = () => {
+      const currentScroll = body.scrollTop;
+      const totalScroll = body.scrollHeight - body.clientHeight;
+  
+      if (currentScroll < totalScroll - 10) {
+        setIsUserAtBottom(false);
+      } else {
+        setIsUserAtBottom(true);
+      }
+    };
+  
+    body.addEventListener("scroll", handleScroll);
+  
+    return () => {
+      body.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  
+
+  useEffect(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+  
+    if (isUserAtBottom) {
+      body.scrollTo({ top: body.scrollHeight, behavior: "smooth" });
+    }
+  }, [messages, currentMessage]);
+  
+  
   return (
     <div className="messages-container">
-      {messages.map((msg, i) => (
-        <div className="message-container" key={i}>
-          <div className="message-container-inner">
-            {msg.sender === "user-message" ? (
-              <div className="user-message-container">
-                <p className="message user-message">{msg.text}</p>
-                <UserMessageOptions />
-              </div>
-            ) : (
-              <div className="ai-message-wrapper">
-                <div className="ai-message-icon">
-                  <img src={openaiUrl} alt="OpenAI" />
-                </div>
-                <div className="ai-message-container">
-                  <p className="message ai-message">{msg.text}</p>
-                  <AIMessageOptions />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
-      {(currentMessage || isStreaming) && (
-        <div className="message-container">
-          <div className="message-container-inner">
+    {messages.map((msg, i) => (
+      <div className="message-container" key={i}>
+        <div className="message-container-inner">
+          {msg.sender === "user-message" ? (
+            <div className="user-message-container">
+              <p className="message user-message">{msg.text}</p>
+              <UserMessageOptions />
+            </div>
+          ) : (
             <div className="ai-message-wrapper">
               <div className="ai-message-icon">
                 <img src={openaiUrl} alt="OpenAI" />
               </div>
               <div className="ai-message-container">
-                <p className="message ai-message">
-                  {currentMessage || "\u00A0"}
-                  <span className="loading-circle"></span>
-                </p>
+                <div
+                  className="message ai-message"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(marked(msg.text)),
+                  }}
+                ></div>
+                <AIMessageOptions />
               </div>
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+
+    {(currentMessage || isStreaming) && (
+      <div className="message-container">
+        <div className="message-container-inner">
+          <div className="ai-message-wrapper">
+            <div className="ai-message-icon">
+              <img src={openaiUrl} alt="OpenAI" />
+            </div>
+            <div className="ai-message-container">
+            <div
+              className="message ai-message"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(marked(currentMessage || "\u00A0").replace(/(<\/[^>]+>)\s*$/, '<span class="loading-circle"></span>$1')),
+              }}
+            ></div>
+
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    )}
+
+    <div className="message-container-bottom"></div>
+  </div>
   );
 });
 
