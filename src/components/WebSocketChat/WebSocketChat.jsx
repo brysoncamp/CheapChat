@@ -9,99 +9,132 @@ import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 
-const WebSocketChat = forwardRef((props, ref) => {
+const WebSocketChat = forwardRef(({ isStreaming, setIsStreaming }, ref) => {
   const [socket, setSocket] = useState(null);
-  const [messages, setMessages] = useState([]); // ✅ Stores full messages
+  const [messages, setMessages] = useState([]);
   const [sessionId, setSessionId] = useState(null);
-  const [currentMessage, setCurrentMessage] = useState(""); // ✅ Buffer for AI messages
+  const [currentMessage, setCurrentMessage] = useState("");
+  const latestMessageRef = useRef("");
+  const messageQueue = useRef([]);
+  const reconnectAttempts = useRef(0);
 
-  const latestMessageRef = useRef(""); // ✅ Keeps track of AI message updates
+  const MAX_RETRIES = 5;
 
-  useEffect(() => {
-    const connectWebSocket = async () => {
-      try {
-        const session = await fetchAuthSession();
-        const token = session.tokens?.idToken?.toString();
-        const userId = session.tokens?.idToken?.payload?.sub;
+  const connectWebSocket = async () => {
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      const userId = session.tokens?.idToken?.payload?.sub;
 
-        if (!token || !userId) {
-          console.error("❌ No token or userId found, user must re-authenticate.");
-          return;
-        }
-
-        const uniqueId = `${userId}-${Math.random().toString(36).substr(2, 9)}`;
-        setSessionId(uniqueId);
-
-        const ws = new WebSocket(`${WEBSOCKET_URL}?token=${token}&sessionId=${uniqueId}`);
-
-        ws.onopen = () => {
-          console.log("✅ WebSocket Connected with sessionId:", uniqueId);
-          setSocket(ws);
-        };
-
-        ws.onmessage = (event) => {
-          try {
-            const data = JSON.parse(event.data);
-            console.log("📩 Message Received:", data);
-
-            if (data.text) {
-              setCurrentMessage((prev) => {
-                latestMessageRef.current = prev + data.text; // ✅ Keep ref updated
-                return latestMessageRef.current;
-              });
-            }
-
-            if (data.done) {
-              console.log("✅ AI Response Complete - Moving to Messages List");
-
-              const finalMessage = latestMessageRef.current.trim();
-              if (finalMessage) {
-                setMessages((prev) => [...prev, { sender: "ai-message", text: finalMessage }]);
-              }
-
-              setCurrentMessage(""); // ✅ Clear buffer for next message
-              latestMessageRef.current = ""; // ✅ Reset ref to prevent duplicates
-            }
-          } catch (error) {
-            console.error("❌ Error parsing message:", error);
-          }
-        };
-
-        ws.onerror = (error) => console.error("❌ WebSocket Error:", error);
-        ws.onclose = () => console.log("🔴 WebSocket Disconnected");
-
-        setSocket(ws);
-      } catch (error) {
-        console.error("❌ WebSocket Auth Error:", error);
+      if (!token || !userId) {
+        console.error("❌ No token or userId found, user must re-authenticate.");
+        return;
       }
-    };
 
-    connectWebSocket();
+      const uniqueId = `${userId}-${Math.random().toString(36).substr(2, 9)}`;
+      setSessionId(uniqueId);
 
-    return () => {
-      if (socket) socket.close();
-    };
-  }, []);
+      const ws = new WebSocket(`${WEBSOCKET_URL}?token=${token}&sessionId=${uniqueId}`);
 
-  // ✅ Function to send a message
-  const sendMessage = (message) => {
-    if (socket && message.trim()) {
-      const payload = { action: "openai", message, sessionId };
-      console.log("📤 Sending Message:", payload);
-      socket.send(JSON.stringify(payload));
+      ws.onopen = () => {
+        console.log("✅ WebSocket Connected with sessionId:", uniqueId);
+        setSocket(ws);
+        reconnectAttempts.current = 0;
 
-      // ✅ Store the user's message separately
-      setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
+        while (messageQueue.current.length > 0) {
+          const pendingMessage = messageQueue.current.shift();
+          ws.send(JSON.stringify(pendingMessage));
+        }
+      };
 
-      // ✅ Reset AI response buffer for new AI response
-      setCurrentMessage("");
-      latestMessageRef.current = ""; // ✅ Ensure AI message resets
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          console.log("📩 Message Received:", data);
+
+          if (data.text) {
+            setCurrentMessage((prev) => {
+              latestMessageRef.current = prev + data.text;
+              return latestMessageRef.current;
+            });
+          }
+
+          if (data.done || data.timeout || data.canceled) {
+
+            setIsStreaming(false); // ✅ Stop streaming
+            console.log("✅ AI Response Complete - Moving to Messages List");
+            const finalMessage = latestMessageRef.current.trim();
+            if (finalMessage) {
+              setMessages((prev) => [...prev, { sender: "ai-message", text: finalMessage }]);
+            }
+            setCurrentMessage("");
+            latestMessageRef.current = "";
+          }
+        } catch (error) {
+          console.error("❌ Error parsing message:", error);
+        }
+      };
+
+      ws.onerror = (error) => console.error("❌ WebSocket Error:", error);
+
+      ws.onclose = () => {
+        console.log("🔴 WebSocket Disconnected");
+        setSocket(null);
+        attemptReconnect();
+      };
+
+      setSocket(ws);
+    } catch (error) {
+      console.error("❌ WebSocket Auth Error:", error);
+      attemptReconnect();
     }
   };
 
-  // ✅ Expose sendMessage to parent (Page.js)
+  const attemptReconnect = () => {
+    if (reconnectAttempts.current >= MAX_RETRIES) {
+      console.error("❌ Max reconnect attempts reached. Stopping reconnect attempts.");
+      return;
+    }
+
+    const delay = Math.min(1000 * Math.pow(2, reconnectAttempts.current), 30000);
+    reconnectAttempts.current += 1;
+
+    console.log(`🔄 Attempting to reconnect WebSocket in ${delay / 1000} seconds...`);
+    setTimeout(connectWebSocket, delay);
+  };
+
+  const sendMessage = (message) => {
+    if (message.trim()) {
+      const payload = { action: "openai", message, sessionId };
+      console.log("📤 Queueing Message:", payload);
+      setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
+
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(payload));
+      } else {
+        messageQueue.current.push(payload);
+        if (!socket || socket.readyState === WebSocket.CLOSED) {
+          attemptReconnect();
+        }
+      }
+    }
+  };
+
+  const cancelMessage = () => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      console.log("🚫 Sending cancel request...");
+      socket.send(JSON.stringify({ action: "cancel", sessionId }));
+    }
+  };
+  
+
+  useEffect(() => {
+    connectWebSocket();
+  }, []);
+
   useImperativeHandle(ref, () => ({
     sendMessage,
+    cancelMessage,
   }));
 
   return (
@@ -111,7 +144,7 @@ const WebSocketChat = forwardRef((props, ref) => {
           <div className="message-container-inner">
             {msg.sender === "user-message" ? (
               <div className="user-message-container">
-                <p className="message user-message" key={i}>{msg.text}</p>
+                <p className="message user-message">{msg.text}</p>
                 <UserMessageOptions />
               </div>
             ) : (
@@ -120,15 +153,15 @@ const WebSocketChat = forwardRef((props, ref) => {
                   <img src={openaiUrl} alt="OpenAI" />
                 </div>
                 <div className="ai-message-container">
-                  <p className="message ai-message" key={i}>{msg.text}</p>
-                  <AIMessageOptions  />
+                  <p className="message ai-message">{msg.text}</p>
+                  <AIMessageOptions />
                 </div>
               </div>
             )}
           </div>
         </div>
       ))}
-      {currentMessage && (
+      {(currentMessage || isStreaming) && (
         <div className="message-container">
           <div className="message-container-inner">
             <div className="ai-message-wrapper">
@@ -136,7 +169,10 @@ const WebSocketChat = forwardRef((props, ref) => {
                 <img src={openaiUrl} alt="OpenAI" />
               </div>
               <div className="ai-message-container">
-                <p className="message ai-message">{currentMessage}</p>
+                <p className="message ai-message">
+                  {currentMessage || "\u00A0"}
+                  <span className="loading-circle"></span>
+                </p>
               </div>
             </div>
           </div>

@@ -2,9 +2,6 @@ import copyUrl from "./copy.svg";
 import editUrl from "./edit.svg";
 
 const UserMessageOptions = () => {
-
-
-  
     return (
         <div className="message-options user-message-options">
             <div className="message-button">

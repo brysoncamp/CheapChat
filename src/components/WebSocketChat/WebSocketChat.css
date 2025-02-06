@@ -142,3 +142,37 @@
 .ai-message-icon img {
     width: 2rem;
 }
+
+/* loading animation */
+
+.loading-circle {
+    width: 0.875rem;
+    height: 0.875rem;
+    background-color: #000; 
+    border-radius: 50%; 
+    animation: pulse 1.5s infinite ease-in-out;
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+@keyframes pulse {
+    0% {
+        transform: scale(1); 
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.25); 
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1); 
+        opacity: 1;
+    }
+}
+
+.ai-message {
+    display: inline-block; /* Ensures text and loader are in the same line */
+    align-items: center; /* Vertically aligns text and the loading circle */
+    white-space: pre-wrap; /* Ensures text wraps properly */
+    word-break: break-word;
+}
