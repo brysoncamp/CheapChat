@@ -10,8 +10,8 @@ const Sidebar = ({ children }) => {
   return (
     <>
       <div className={`sidebar ${isClosed ? 'sidebar-closed' : ''}`}>
-        <a className="logo-container" href="/">
-          <img className="logo" src={logoUrl} alt="logo" />
+        <a className="logo-container unselectable" href="/" draggable="false">
+          <img className="logo" src={logoUrl} alt="logo" draggable="false" />
           <p className="logo-name">CheapChat</p>
         </a>
       </div>

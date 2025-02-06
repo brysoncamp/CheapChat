@@ -29,8 +29,31 @@ button {
     border: none;
 }
 
+
+.unselectable {
+    user-select: none;      /* Prevent text selection */
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  
+    pointer-events: auto;   /* Ensure buttons remain clickable */
+    -webkit-touch-callout: none; /* Disable context menu on iOS */
+}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
+    margin: 0 0 -1.5rem 0;
     padding: 0;
 }
 
@@ -113,6 +136,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0rem !important;
 }
 
+.message-container li {
+    line-height: 1.5rem;
+}
+
 /* Ensure nested lists are closely packed */
 .message-container li li {
     margin-top: -0.1rem !important;
@@ -130,3 +157,4 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.25rem !important;
     margin-top: -1rem !important;
 }
+

@@ -188,8 +188,8 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
             </div>
           ) : (
             <div className="ai-message-wrapper">
-              <div className="ai-message-icon">
-                <img src={openaiUrl} alt="OpenAI" />
+              <div className="ai-message-icon unselectable">
+                <img src={openaiUrl} alt="OpenAI" draggable="false" />
               </div>
               <div className="ai-message-container">
                 <div
@@ -210,8 +210,8 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
       <div className="message-container">
         <div className="message-container-inner">
           <div className="ai-message-wrapper">
-            <div className="ai-message-icon">
-              <img src={openaiUrl} alt="OpenAI" />
+            <div className="ai-message-icon unselectable">
+              <img src={openaiUrl} alt="OpenAI" draggable="false" />
             </div>
             <div className="ai-message-container">
             <div

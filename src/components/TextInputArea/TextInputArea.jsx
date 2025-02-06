@@ -5,19 +5,17 @@ const TextInputArea = forwardRef(({ value, onChange, onSend }, ref) => { // ✅ 
   useEffect(() => {
     const textArea = ref.current;
 
-    const adjustHeight = () => {
-      if (!textArea) return;
+    if (!textArea) return;
+
+    // Adjust height dynamically
+    textArea.style.height = "auto"; 
+    textArea.style.height = `${textArea.scrollHeight}px`;
+
+    // If the value is empty, reset the height to a single line
+    if (value === "") {
       textArea.style.height = "auto";
-      textArea.style.height = `${textArea.scrollHeight}px`;
-    };
-
-    textArea.addEventListener("input", adjustHeight);
-    adjustHeight();
-
-    return () => {
-      textArea.removeEventListener("input", adjustHeight);
-    };
-  }, [ref]);
+    }
+  }, [value]);
 
   // ✅ Define handleKeyDown inside the component
   const handleKeyDown = (event) => {

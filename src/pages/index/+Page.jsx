@@ -1,6 +1,8 @@
 import "./Page.css";
 import InputContainer from "../../components/InputContainer/InputContainer";
 import WebSocketChat from "../../components/WebSocketChat/WebSocketChat";
+import Notice from "../../components/Notice/Notice";
+
 import { useState, useRef } from "react";
 
 const Page = () => {
@@ -34,6 +36,7 @@ const Page = () => {
         <WebSocketChat ref={webSocketChatRef} bodyRef={bodyRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} /> {/* ✅ Pass ref */}
       </div>
       <InputContainer inputValue={inputValue} setInputValue={setInputValue} isStreaming={isStreaming} onSend={handleSendMessage} onStop={handleStopMessage} />
+      <Notice inputValue={inputValue} />
     </div>
   );
 };
