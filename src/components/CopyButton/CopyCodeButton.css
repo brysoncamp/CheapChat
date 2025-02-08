@@ -25,6 +25,15 @@
     color: #444
 }
 
-.copy-code-button img {
+.copy-code-icon {
+    display: block;
+    line-height: 1;
     background-color: #f6f8fa;
-}
+    height: 14px;
+    width: 14px;
+    cursor: pointer;
+    will-change: transform; /* ✅ Forces browser re-render */
+    transform: translateZ(0); /* ✅ Prevents Chrome SVG distortions */
+    image-rendering: crisp-edges; /* ✅ Ensures clear image rendering */
+  }
+  

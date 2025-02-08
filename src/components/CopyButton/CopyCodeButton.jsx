@@ -9,12 +9,12 @@ const CopyCodeButton = ({ text }) => {
   return (
     <div className="copy-code-container">
       <div className="copy-code-button unselectable" onClick={() => copyToClipboard(text)}>
-        <img
-            src={isCopied ? tickUrl : copyUrl}
-            style={{ height: "0.875rem", cursor: "pointer" }}
-            alt="Copy"
-            draggable="false"
-        />
+      <img
+        src={isCopied ? tickUrl : copyUrl}
+        className="copy-code-icon sharp-svg"
+        alt="Copy"
+        draggable="false"
+      />
         <div>Copy</div>
       </div>
     </div>

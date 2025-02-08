@@ -40,10 +40,43 @@ button {
 }
   
 
+.sharp-svg {
+    will-change: transform; /* ✅ Forces browser re-render */
+    transform: translateZ(0); /* ✅ Prevents Chrome SVG distortions */
+    image-rendering: crisp-edges; /* ✅ Ensures clear image rendering */
+}
 
 
 
 
 
 
+/* markdown */
 
+p a {
+    background-color: #f6f8fa;
+    padding: 0.5rem 0.25rem;
+    border-radius: 0.5rem;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+code:not(pre code) {
+    background-color: #f6f8fa;
+    padding: 0.25rem 0.375rem;
+    border-radius: 0.375rem;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.875rem;
+}
+
+th {
+    background-color: #f6f8fa;
+    border-radius: 0.5rem;
+}
+
+td {
+    background-color: #f6f8fa;
+    border-radius: 0.5rem;
+}

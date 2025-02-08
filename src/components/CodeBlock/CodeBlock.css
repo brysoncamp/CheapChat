@@ -7,11 +7,12 @@
     position: relative;
 }
 
+/*
 .code-block code {
     margin-top: -0.25rem;
     padding: 0rem 1.5rem 1.5rem 1.5rem;
     white-space: pre-wrap;
-}
+}*/
 
 .code-block-language {
     position: absolute;
@@ -20,4 +21,12 @@
     font-family: "Inter", sans-serif;
     font-size: 0.875rem;
     color: #444;
+}
+
+.code-block pre {
+    white-space: pre-wrap;
+    margin-top: -0.25rem;
+    padding: 0rem 1.5rem 0rem 1.5rem;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.875rem;
 }

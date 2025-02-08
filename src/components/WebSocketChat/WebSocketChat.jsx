@@ -6,14 +6,7 @@ import openaiUrl from "./openai.svg";
 
 import UserMessageOptions from "../UserMessageOptions/UserMessageOptions";
 import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
-
-import DOMPurify from "dompurify";
-import { marked } from "marked";
-import hljs from "highlight.js";
-import "highlight.js/styles/github.css";
-
 import RenderMarkdown from "../RenderMarkdown/RenderMarkdown";
-
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 
@@ -39,7 +32,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
         return;
       }
 
-      const uniqueId = `${userId}-${Math.random().toString(36).substr(2, 9)}`;
+      const uniqueId = `${userId}-${Math.random().toString(36).slice(2, 11)}`;
       setSessionId(uniqueId);
 
       const ws = new WebSocket(`${WEBSOCKET_URL}?token=${token}&sessionId=${uniqueId}`);
@@ -155,7 +148,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
       const currentScroll = body.scrollTop;
       const totalScroll = body.scrollHeight - body.clientHeight;
   
-      if (currentScroll < totalScroll - 10) {
+      if (currentScroll < totalScroll - 30) {
         setIsUserAtBottom(false);
       } else {
         setIsUserAtBottom(true);
@@ -179,44 +172,9 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
     }
   }, [messages, currentMessage]);
 
-
-
-  const renderer = new marked.Renderer();
-
-
-  const escapeHtml = (str) => {
-    const div = document.createElement("div");
-    div.innerText = str;
-    return div.innerHTML;
-  };
-  
-
-  renderer.code = (code) => {
-    return `<pre>
-      <div class="code-copy">Copy</div>
-      <code>${escapeHtml(code.text)}</code>
-    </pre>`;
-  };
-
-
-  // Function to sanitize Markdown
-  const sanitizeMarkdown = (text) => DOMPurify.sanitize(marked(text || "\u00A0", { renderer }));
-
-  const extractPlainText = (html) =>
-    new DOMParser().parseFromString(html, "text/html").body.textContent || "";
-
-  const sanitizeWithLoading = (text) =>
-    sanitizeMarkdown(text).replace(
-      /(<\/[^>]+>)\s*$/,
-      '<span class="loading-circle"></span>$1'
-    );
-
   return (
     <div className="messages-container">
     {messages.map((msg, i) => {
-      const sanitizedHtml = sanitizeMarkdown(msg.text);
-      const plainText = extractPlainText(sanitizedHtml);
-
       return (
         <div className="message-container" key={i}>
           <div className="message-container-inner">
@@ -225,7 +183,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
                 <p className="message user-message">
                   {msg.text}
                 </p>
-                <UserMessageOptions text={plainText} />
+                <UserMessageOptions text={msg.text} />
               </div>
             ) : (
               <div className="ai-message-wrapper">
@@ -233,12 +191,8 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
                   <img src={openaiUrl} alt="OpenAI" draggable="false" />
                 </div>
                 <div className="ai-message-container">
-                  { /* <div
-                    className="message ai-message"
-                    dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-                  ></div> */  }
                   <RenderMarkdown text={msg.text} />
-                  <AIMessageOptions text={plainText} />
+                  <AIMessageOptions text={msg.text} />
                 </div>
               </div>
             )}
@@ -255,13 +209,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
               <img src={openaiUrl} alt="OpenAI" draggable="false" />
             </div>
             <div className="ai-message-container">
-              { /* <div
-                className="message ai-message"
-                dangerouslySetInnerHTML={{
-                  __html: sanitizeWithLoading(currentMessage),
-                }} 
-              ></div> */ }
-              <RenderMarkdown text={currentMessage} />
+              <RenderMarkdown text={currentMessage} isLoading={true} />
             </div>
           </div>
         </div>
