@@ -1,0 +1,108 @@
+
+
+/* markdown related */
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 -1.5rem 0;
+    padding: 0;
+}
+
+.message-container p {
+    line-height: 2;
+    margin: 0;
+    padding: 0;
+}
+
+.message-container ul,
+.message-container ol {
+    margin: 0;
+    padding: 0;
+    line-height: 1.25rem;
+}
+
+.message-container ul p,
+.message-container ol p {
+    margin: 0;
+    padding: 0;
+    line-height: 2rem;
+}
+
+/* Lists should have minimal spacing but still be readable */
+.message-container ul,
+.message-container ol {
+    margin-left: 1.125rem !important;  /* Slight indentation for structure */
+}
+
+/* List items should be closely packed */
+.message-container li:has(p) {
+    display: list-item;
+    margin-top: 0.05rem !important; 
+    margin-bottom: -2rem !important; 
+}
+
+/* Remove extra spacing when a list follows a paragraph */
+.message-container p + ul,
+.message-container p + ol {
+    margin-top: -1.5rem !important;
+}
+
+
+
+/* Remove extra spacing when a list is inside a list item */
+.message-container li p + ul,
+.message-container li p + ol {
+    margin-top: -0.4rem !important;
+    margin-bottom: -0.2rem !important;
+}
+
+/* Ensure paragraphs inside list items don’t create too much space */
+.message-container li p {
+    margin-top: 0rem !important;
+    margin-bottom: 0rem !important;
+}
+
+.message-container li {
+    line-height: 1.5rem;
+}
+
+/* Ensure nested lists are closely packed */
+.message-container li li {
+    margin-top: -0.1rem !important;
+    margin-bottom: -0.1rem !important;
+}
+
+/* Ensure spacing is minimal after lists */
+.message-container ul + p,
+.message-container ol + p {
+    margin-top: -0.75rem !important;
+}
+
+
+.message-container li p + ul {
+    line-height: 1.25rem !important;
+    margin-top: -1rem !important;
+}
+
+code:not(pre code) {
+    background-color: #f6f8fa;
+    padding: 0.25rem 0.375rem;
+    border-radius: 0.375rem;
+}
+
+pre {
+    background-color: #f6f8fa;
+    padding-top: 0;
+    border-radius: 0.5rem;
+    border-radius: 0.5rem 1.5rem 1.5rem 0.5rem;
+    position: relative;
+}
+
+code {
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.875rem;
+}
+
+pre code {
+
+}

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import plusUrl from "./plus.svg";
 import sendUrl from "./send.svg";
-import stopUrl from "./stop.svg";
+import stopUrl from "../../assets/icons/stop.svg";
 import TextInputArea from "../TextInputArea/TextInputArea";
 import ActionButton from "../ActionButton/ActionButton";
 import "./InputContainer.css";

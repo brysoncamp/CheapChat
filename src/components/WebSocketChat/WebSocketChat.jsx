@@ -9,6 +9,10 @@ import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
 
 import DOMPurify from "dompurify";
 import { marked } from "marked";
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
+
+import RenderMarkdown from "../RenderMarkdown/RenderMarkdown";
 
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
@@ -174,37 +178,74 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
       body.scrollTo({ top: body.scrollHeight, behavior: "smooth" });
     }
   }, [messages, currentMessage]);
+
+
+
+  const renderer = new marked.Renderer();
+
+
+  const escapeHtml = (str) => {
+    const div = document.createElement("div");
+    div.innerText = str;
+    return div.innerHTML;
+  };
   
-  
+
+  renderer.code = (code) => {
+    return `<pre>
+      <div class="code-copy">Copy</div>
+      <code>${escapeHtml(code.text)}</code>
+    </pre>`;
+  };
+
+
+  // Function to sanitize Markdown
+  const sanitizeMarkdown = (text) => DOMPurify.sanitize(marked(text || "\u00A0", { renderer }));
+
+  const extractPlainText = (html) =>
+    new DOMParser().parseFromString(html, "text/html").body.textContent || "";
+
+  const sanitizeWithLoading = (text) =>
+    sanitizeMarkdown(text).replace(
+      /(<\/[^>]+>)\s*$/,
+      '<span class="loading-circle"></span>$1'
+    );
+
   return (
     <div className="messages-container">
-    {messages.map((msg, i) => (
-      <div className="message-container" key={i}>
-        <div className="message-container-inner">
-          {msg.sender === "user-message" ? (
-            <div className="user-message-container">
-              <p className="message user-message">{msg.text}</p>
-              <UserMessageOptions />
-            </div>
-          ) : (
-            <div className="ai-message-wrapper">
-              <div className="ai-message-icon unselectable">
-                <img src={openaiUrl} alt="OpenAI" draggable="false" />
+    {messages.map((msg, i) => {
+      const sanitizedHtml = sanitizeMarkdown(msg.text);
+      const plainText = extractPlainText(sanitizedHtml);
+
+      return (
+        <div className="message-container" key={i}>
+          <div className="message-container-inner">
+            {msg.sender === "user-message" ? (
+              <div className="user-message-container">
+                <p className="message user-message">
+                  {msg.text}
+                </p>
+                <UserMessageOptions text={plainText} />
               </div>
-              <div className="ai-message-container">
-                <div
-                  className="message ai-message"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(marked(msg.text)),
-                  }}
-                ></div>
-                <AIMessageOptions />
+            ) : (
+              <div className="ai-message-wrapper">
+                <div className="ai-message-icon unselectable">
+                  <img src={openaiUrl} alt="OpenAI" draggable="false" />
+                </div>
+                <div className="ai-message-container">
+                  { /* <div
+                    className="message ai-message"
+                    dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+                  ></div> */  }
+                  <RenderMarkdown text={msg.text} />
+                  <AIMessageOptions text={plainText} />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
-    ))}
+      );
+    })}
 
     {(currentMessage || isStreaming) && (
       <div className="message-container">
@@ -214,13 +255,13 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
               <img src={openaiUrl} alt="OpenAI" draggable="false" />
             </div>
             <div className="ai-message-container">
-            <div
-              className="message ai-message"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(marked(currentMessage || "\u00A0").replace(/(<\/[^>]+>)\s*$/, '<span class="loading-circle"></span>$1')),
-              }}
-            ></div>
-
+              { /* <div
+                className="message ai-message"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeWithLoading(currentMessage),
+                }} 
+              ></div> */ }
+              <RenderMarkdown text={currentMessage} />
             </div>
           </div>
         </div>

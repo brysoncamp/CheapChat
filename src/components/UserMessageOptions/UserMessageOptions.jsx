@@ -1,15 +1,14 @@
-import copyUrl from "./copy.svg";
 import editUrl from "./edit.svg";
+import CopyButton from "../CopyButton/CopyButton";
 
-const UserMessageOptions = () => {
+
+const UserMessageOptions = ({ text }) => {
     return (
         <div className="message-options user-message-options">
             <div className="message-button unselectable">
-                <img src={editUrl} style={{ height: "1rem" }} alt="Edit" draggable="false" />
+                <img src={editUrl} style={{ height: "1.125rem" }} alt="Edit" draggable="false" />
             </div>
-            <div className="message-button unselectable">
-                <img src={copyUrl} style={{ height: "1rem" }} alt="Copy" draggable="false" />
-            </div>
+            <CopyButton text={text} />
         </div>
     );
 };

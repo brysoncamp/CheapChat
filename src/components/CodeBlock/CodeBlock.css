@@ -1,0 +1,23 @@
+.code-block {
+    background-color: #f6f8fa;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius:  0.25rem 1.5rem 1.5rem 0.25rem;
+    position: relative;
+}
+
+.code-block code {
+    margin-top: -0.25rem;
+    padding: 0rem 1.5rem 1.5rem 1.5rem;
+    white-space: pre-wrap;
+}
+
+.code-block-language {
+    position: absolute;
+    top: 1rem;
+    left: 1.25rem;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    color: #444;
+}

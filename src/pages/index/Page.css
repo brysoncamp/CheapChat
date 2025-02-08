@@ -22,11 +22,12 @@
 }
 
 .topbar {
-    min-height: 3.5rem;
+    min-height: 3.75rem;
     position: sticky;
-    top: 0;
+    top: -0.25rem;
     width: 100%;
     background-color: #fff;
+    z-index: 100;
 }
 
 .message-container-bottom {
