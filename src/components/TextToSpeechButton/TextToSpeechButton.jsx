@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import soundUrl from "./sound.svg";
 import stopCircleUrl from "./stop-circle.svg";
 
-const TextToSpeechButton = ({ text }) => {
+const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
   const [selectedVoice, setSelectedVoice] = useState(null);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const utteranceRef = useRef(null);
   const resumeTimeoutRef = useRef(null);
 

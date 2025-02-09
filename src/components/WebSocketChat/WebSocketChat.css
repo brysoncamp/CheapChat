@@ -77,21 +77,24 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-top: 0.25rem;
+    /* margin-top: 0.25rem; */
 
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
 }
-
+/*
 .ai-message-container .message-button {
+    /*
     margin-right: 0.5rem;
     margin-left: -0.25rem;
-}
+    *//*
+}*/
 
+/*
 .user-message-container .message-button {
     margin-left: 0.25rem;
-}
+}*/
 
 .message-button:hover {
     background-color: #f6f8fa;
@@ -138,7 +141,7 @@
     justify-content: center;
     align-items: center;
     border: 1px solid #ddd;
-    margin: 1rem;
+    /*margin: 1rem;*/
 }
 
 .ai-message-icon img {

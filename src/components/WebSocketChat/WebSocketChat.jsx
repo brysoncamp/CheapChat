@@ -7,6 +7,7 @@ import openaiUrl from "./openai.svg";
 import UserMessageOptions from "../UserMessageOptions/UserMessageOptions";
 import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
 import RenderMarkdown from "../RenderMarkdown/RenderMarkdown";
+import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 
@@ -35,6 +36,9 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
       const uniqueId = `${userId}-${Math.random().toString(36).slice(2, 11)}`;
       setSessionId(uniqueId);
 
+      //const ws = new WebSocket(`${WEBSOCKET_URL}?token=${token}&sessionId=${uniqueId}`);
+
+      // WILL WANT TO PASS THROUGH THE CONVERSATION ID HERE
       const ws = new WebSocket(`${WEBSOCKET_URL}?token=${token}&sessionId=${uniqueId}`);
 
       ws.onopen = () => {
@@ -52,6 +56,10 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
         try {
           const data = JSON.parse(event.data);
           console.log("📩 Message Received:", data);
+
+          if (data.conversationId) {
+            window.history.pushState({}, "", `/c/${data.conversationId}`);
+          }
 
           if (data.text) {
             setCurrentMessage((prev) => {
@@ -187,9 +195,11 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
               </div>
             ) : (
               <div className="ai-message-wrapper">
-                <div className="ai-message-icon unselectable">
-                  <img src={openaiUrl} alt="OpenAI" draggable="false" />
-                </div>
+                <TooltipWrapper info="GPT-4o" className="ai-name-tooltip" position="W">
+                  <div className="ai-message-icon unselectable">
+                    <img src={openaiUrl} alt="OpenAI" draggable="false" />
+                  </div>
+                </TooltipWrapper>
                 <div className="ai-message-container">
                   <RenderMarkdown text={msg.text} />
                   <AIMessageOptions text={msg.text} />
@@ -205,9 +215,11 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
       <div className="message-container">
         <div className="message-container-inner">
           <div className="ai-message-wrapper">
-            <div className="ai-message-icon unselectable">
-              <img src={openaiUrl} alt="OpenAI" draggable="false" />
-            </div>
+            <TooltipWrapper info="GPT-4o" className="ai-name-tooltip" position="W">
+              <div className="ai-message-icon unselectable">
+                <img src={openaiUrl} alt="OpenAI" draggable="false" />
+              </div>
+            </TooltipWrapper>
             <div className="ai-message-container">
               <RenderMarkdown text={currentMessage} isLoading={true} />
             </div>

@@ -1,0 +1,1 @@
+export default "Use ChatGPT, Claude, Gemini, and more on CheapChat—the pay-as-you-go AI chat platform. No subscriptions, just affordable AI access whenever you need it. Start chatting now!";

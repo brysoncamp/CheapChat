@@ -3,7 +3,7 @@ export { Page };
 function Page(pageContext) {
   let { abortReason } = pageContext;
   if (!abortReason) {
-    abortReason = pageContext.is404 ? "Page not found." : "Something went wrong.";
+    abortReason = pageContext.is404 ? "Page not found." : "Something went wrong!";
   }
 
   return (
