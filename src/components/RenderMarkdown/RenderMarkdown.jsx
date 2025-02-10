@@ -4,8 +4,9 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css"; // Import KaTeX styles
-
 import CodeBlock from "../CodeBlock/CodeBlock";
+
+import "./RenderMarkdown.css";
 
 // this function may cause issues with some markdown content
 const convertMathDelimiters = (text) => {

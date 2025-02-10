@@ -1,6 +1,7 @@
 import editUrl from "./edit.svg";
 import CopyButton from "../CopyButton/CopyButton";
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
+import "./UserMessageOptions.css";
 
 const UserMessageOptions = ({ text }) => {
     return (

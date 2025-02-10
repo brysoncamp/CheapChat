@@ -1,0 +1,21 @@
+.ai-message-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 1.125rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+}
+
+.ai-message-icon img {
+    width: 2rem;
+}
+
+.ai-message-container {
+    margin-top: 0.375rem;
+}
+
+.ai-message-wrapper {
+    display: flex;
+}

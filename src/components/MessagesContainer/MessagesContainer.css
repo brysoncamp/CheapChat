@@ -1,0 +1,59 @@
+
+.messages-container {
+    flex: 1;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 1rem;
+    padding-top: 2rem;
+}
+
+.message-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.message-container-inner {
+    width: 90%;
+    max-width: 50rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    width: auto;
+    font-family: "Inter", sans-serif;
+    line-height: 1.675rem;
+    color: #111;
+    margin: 1.25rem 0rem 0 0;
+}
+
+.message-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out, visibility 0.1s ease-in-out;
+}
+
+.message-button:hover {
+    background-color: #f6f8fa;
+}
+
+.message-container:hover:has(.ai-message-container) .message-button {
+    visibility: visible;
+    opacity: 1;
+}
+
+.message-container:nth-last-of-type(2) .ai-message-options .message-button {
+    visibility: visible;
+    opacity: 1;
+}
