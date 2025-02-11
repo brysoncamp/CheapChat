@@ -4,7 +4,7 @@ import MessagesContainer from "../MessagesContainer/MessagesContainer";
 import useWebSocket from "../../hooks/useWebSocket";
 import useScrollManager from "../../hooks/useScrollManager";
 
-const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref) => {
+const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming, hasStreamed }, ref) => {
 
   const { messages, currentMessage, sendMessage, cancelMessage } = useWebSocket(setIsStreaming);
   useScrollManager(bodyRef, messages, currentMessage);
@@ -15,7 +15,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming }, ref)
   }));
 
   return (
-    <MessagesContainer messages={messages} currentMessage={currentMessage} isStreaming={isStreaming} />
+    hasStreamed && <MessagesContainer messages={messages} currentMessage={currentMessage} isStreaming={isStreaming} />
   );
 });
 

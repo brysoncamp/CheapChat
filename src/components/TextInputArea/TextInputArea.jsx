@@ -1,7 +1,8 @@
 import { useEffect, forwardRef } from "react";
 import "./TextInputArea.css";
+import modelsData from "../../data/models.json";
 
-const TextInputArea = forwardRef(({ value, onChange, onSend }, ref) => { // ✅ Consistent name
+const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, ref) => { // ✅ Consistent name
   useEffect(() => {
     const textArea = ref.current;
 
@@ -25,12 +26,18 @@ const TextInputArea = forwardRef(({ value, onChange, onSend }, ref) => { // ✅ 
     }
   };
 
+  const selectedModelName = modelsData[selectedModel].displayName;
+  const selectedModelCategory = modelsData[selectedModel].category[0];
+  //const selectedModelName = "";
+  console.log(selectedModelName);
+  //console.log
+
   return (
     <textarea
       ref={ref}
       rows="1"
       className="input-text"
-      placeholder="Chat with GPT-4o"
+      placeholder={`${selectedModelCategory} with ${selectedModelName}`}
       value={value}
       onChange={onChange} // Updates the input state
       onKeyDown={handleKeyDown} // ✅ Calls send only when Enter is pressed

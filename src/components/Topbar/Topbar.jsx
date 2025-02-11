@@ -1,10 +1,10 @@
 import "./Topbar.css";
 import ModelSelector from "../ModelSelector/ModelSelector";
 
-const Topbar = ({ selectedModel, useSelectedModel }) => { 
+const Topbar = ({ selectedModel, setSelectedModel }) => { 
     return (
         <div className="topbar">
-            <ModelSelector selectedModel={selectedModel} useSelectedModel={useSelectedModel} />
+            <ModelSelector selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
         </div>
     )
 }

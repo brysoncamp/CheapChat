@@ -7,9 +7,11 @@ import ActionButton from "../ActionButton/ActionButton";
 import "./InputContainer.css";
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 
-const InputContainer = ({ inputValue, setInputValue, isStreaming, onSend, onStop }) => { // ✅ Consistent name
+const InputContainer = ({ inputValue, setInputValue, isStreaming, onSend, onStop, selectedModel }) => {
   const inputRef = useRef(null);
   const textAreaRef = useRef(null);
+
+  //console.log(selectedModel);
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -31,6 +33,7 @@ const InputContainer = ({ inputValue, setInputValue, isStreaming, onSend, onStop
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onSend={onSend} // ✅ Now correctly named
+        selectedModel={selectedModel}
         ref={textAreaRef}
       />
       <TooltipWrapper info="Send" className="send-button-tooltip" position="N">

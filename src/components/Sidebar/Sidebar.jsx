@@ -5,7 +5,7 @@ import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 
 import "./Sidebar.css";
 
-const Sidebar = ({ children }) => {
+const Sidebar = ({ selectedModel, setSelectedModel }) => {
 
   const [isClosed, setIsClosed] = useState(false);
 

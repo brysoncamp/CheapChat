@@ -55,11 +55,16 @@ const useWebSocket = (setIsStreaming) => {
           }
 
           if (data.done || data.timeout || data.canceled) {
+            console.log("setting ai-message", latestMessageRef.current);
             setIsStreaming(false);
-            setMessages((prev) => [...prev, { sender: "ai-message", text: latestMessageRef.current.trim() }]);
+            const finalMessage = latestMessageRef.current.trim();
+            if (finalMessage) {
+              setMessages((prev) => [...prev, { sender: "ai-message", text: finalMessage }]);
+            }
             setCurrentMessage("");
-            latestMessageRef.current = "";
+            latestMessageRef.current = ""; // Reset AFTER setting state
           }
+          
         } catch (error) {
           console.error("❌ Error parsing message:", error);
         }

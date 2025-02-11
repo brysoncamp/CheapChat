@@ -3,13 +3,14 @@ import InputContainer from "../../components/InputContainer/InputContainer";
 import WebSocketChat from "../../components/WebSocketChat/WebSocketChat";
 import Notice from "../../components/Notice/Notice";
 import Topbar from "../../components/Topbar/Topbar";
+import AIExplorer from "../../components/AIExplorer/AIExplorer";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const Page = () => {
+const Page = ({ selectedModel, setSelectedModel }) => {
   const [inputValue, setInputValue] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
-  const [selectedModel, useSelectedModel] = useState("GPT-4o");  
+  const [hasStreamed, setHasStreamed] = useState(false);
 
   const webSocketChatRef = useRef(null); // ✅ Create ref for WebSocketChat
   const bodyRef = useRef(null);
@@ -32,13 +33,21 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    if (isStreaming) {
+      setHasStreamed(true);
+    }
+  }, [isStreaming]);
+
+
   return (
     <div className="page">
       <div className="body" ref={bodyRef}>
-        <Topbar selectedModel={selectedModel} useSelectedModel={useSelectedModel} />
-        <WebSocketChat ref={webSocketChatRef} bodyRef={bodyRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} /> {/* ✅ Pass ref */}
+        <Topbar selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
+        <AIExplorer hasStreamed={hasStreamed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
+        <WebSocketChat ref={webSocketChatRef} bodyRef={bodyRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} hasStreamed={hasStreamed} />
       </div>
-      <InputContainer inputValue={inputValue} setInputValue={setInputValue} isStreaming={isStreaming} onSend={handleSendMessage} onStop={handleStopMessage} />
+      <InputContainer inputValue={inputValue} setInputValue={setInputValue} isStreaming={isStreaming} onSend={handleSendMessage} onStop={handleStopMessage} selectedModel={selectedModel} />
       <Notice inputValue={inputValue} />
     </div>
   );

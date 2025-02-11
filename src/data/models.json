@@ -1,0 +1,149 @@
+{
+  "openai-gpt-4o": {
+    "category": ["Chat"],
+    "description": "High-intelligence model for complex tasks",
+    "displayName": "GPT-4o",
+    "modelName": "gpt-4o",
+    "pricing": {
+      "input": "$5.00 / 1M input tokens",
+      "output": "$20.00 / 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-gpt-4o-mini": {
+    "category": ["Chat"],
+    "description": "Optimized model for fast, cost-effective tasks",
+    "displayName": "GPT-4o mini",
+    "modelName": "gpt-4o-mini",
+    "pricing": {
+      "input": "$0.15 / 1M input tokens",
+      "output": "$0.60 / 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-o1": {
+    "category": ["Reason"],
+    "description": "",
+    "displayName": "OpenAI o1",
+    "modelName": "o1",
+    "pricing": {
+      "input": "$30.00 / 1M input tokens",
+      "output": "$120.00 / 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-o1-mini": {
+    "category": ["Reason"],
+    "description": "",
+    "displayName": "OpenAI o1-mini",
+    "modelName": "o1-mini",
+    "pricing": {
+      "input": "$2.20 / 1M input tokens",
+      "output": "$8.80 / 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-o3-mini": {
+    "category": ["Reason"],
+    "description": "",
+    "displayName": "OpenAI o3-mini",
+    "modelName": "o3-mini",
+    "pricing": {
+      "input": "$2.20 / 1M input tokens",
+      "output": "$8.80 / 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-chatgpt-4o-latest": {
+    "category": ["Chat"],
+    "description": "Latest 4o model used in ChatGPT",
+    "displayName": "ChatGPT 4o",
+    "modelName": "chatgpt-4o-latest",
+    "pricing": {
+      "input": "$10.00 / 1M input tokens",
+      "output": "$30.00/ 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-gpt-4-turbo": {
+    "category": ["Chat"],
+    "description": "",
+    "displayName": "GPT-4 Turbo",
+    "modelName": "gpt-4-turbo",
+    "pricing": {
+      "input": "$20.00 / 1M input tokens",
+      "output": "$60.00/ 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-gpt-4": {
+    "category": ["Chat"],
+    "description": "",
+    "displayName": "GPT-4",
+    "modelName": "gpt-4",
+    "pricing": {
+      "input": "$60.00 / 1M input tokens",
+      "output": "$120.00/ 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "openai-gpt-3.5-turbo": {
+    "category": ["Chat"],
+    "description": "",
+    "displayName": "GPT-3.5 Turbo",
+    "modelName": "gpt-3.5-turbo",
+    "pricing": {
+      "input": "$1.00 / 1M input tokens",
+      "output": "$3.00/ 1M output tokens"
+    },
+    "provider": "OpenAI"
+  },
+  "perplexity-sonar-reasoning-pro": {
+    "category": ["Search", "Reason"],
+    "description": "",
+    "displayName": "Sonar Reasoning Pro",
+    "modelName": "sonar-reasoning-pro",
+    "pricing": {
+      "input": "$4.00 / 1M input tokens",
+      "output": "$16.00 / 1M output tokens",
+      "search": "$10.00 / 1K searches"
+    },
+    "provider": "Perplexity"
+  },
+  "perplexity-sonar-reasoning": {
+    "category": ["Search", "Reason"],
+    "description": "",
+    "displayName": "Sonar Reasoning",
+    "modelName": "sonar-reasoning",
+    "pricing": {
+      "input": "$2.00 / 1M input tokens",
+      "output": "$10.00 / 1M output tokens",
+      "search": "$10.00 / 1K searches"
+    },
+    "provider": "Perplexity"
+  },
+  "perplexity-sonar-pro": {
+    "category": ["Search"],
+    "description": "",
+    "displayName": "Sonar Pro",
+    "modelName": "sonar-pro",
+    "pricing": {
+      "input": "$6.00 / 1M input tokens",
+      "output": "$30.00 / 1M output tokens",
+      "search": "$10.00 / 1K searches"
+    },
+    "provider": "Perplexity"
+  },
+  "perplexity-sonar": {
+    "category": ["Search"],
+    "description": "",
+    "displayName": "Sonar",
+    "modelName": "sonar",
+    "pricing": {
+      "input": "$2.00 / 1M input tokens",
+      "output": "$2.00 / 1M output tokens",
+      "search": "$10.00 / 1K searches"
+    },
+    "provider": "Perplexity"
+  }
+}

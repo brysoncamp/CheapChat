@@ -19,8 +19,17 @@
 }
 
 .model-icon {
-    height: 1.675rem;
     margin-right: 0.25rem;
+}
+
+.openai-icon {
+    height: 1.675rem;
+}
+
+.perplexity-icon {
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    margin-left: 0.25rem;
 }
 
 .selector-icon {
