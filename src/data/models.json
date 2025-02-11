@@ -1,7 +1,7 @@
 {
   "openai-gpt-4o": {
     "category": ["Chat"],
-    "description": "High-intelligence model for complex tasks",
+    "description": "High-intelligence model for handling complex tasks.",
     "displayName": "GPT-4o",
     "modelName": "gpt-4o",
     "pricing": {
@@ -12,7 +12,7 @@
   },
   "openai-gpt-4o-mini": {
     "category": ["Chat"],
-    "description": "Optimized model for fast, cost-effective tasks",
+    "description": "Optimized, fast model for cost-effective tasks.",
     "displayName": "GPT-4o mini",
     "modelName": "gpt-4o-mini",
     "pricing": {
@@ -23,7 +23,7 @@
   },
   "openai-o1": {
     "category": ["Reason"],
-    "description": "",
+    "description": "Advanced reasoning model for in-depth analysis.",
     "displayName": "OpenAI o1",
     "modelName": "o1",
     "pricing": {
@@ -34,7 +34,7 @@
   },
   "openai-o1-mini": {
     "category": ["Reason"],
-    "description": "",
+    "description": "Efficient reasoning model for smart problem-solving.",
     "displayName": "OpenAI o1-mini",
     "modelName": "o1-mini",
     "pricing": {
@@ -45,7 +45,7 @@
   },
   "openai-o3-mini": {
     "category": ["Reason"],
-    "description": "",
+    "description": "Streamlined reasoning model for rapid analysis.",
     "displayName": "OpenAI o3-mini",
     "modelName": "o3-mini",
     "pricing": {
@@ -56,7 +56,7 @@
   },
   "openai-chatgpt-4o-latest": {
     "category": ["Chat"],
-    "description": "Latest 4o model used in ChatGPT",
+    "description": "Latest GPT-4o model use in ChatGPT.",
     "displayName": "ChatGPT 4o",
     "modelName": "chatgpt-4o-latest",
     "pricing": {
@@ -67,7 +67,7 @@
   },
   "openai-gpt-4-turbo": {
     "category": ["Chat"],
-    "description": "",
+    "description": "Legacy GPT-4 Turbo: Faster, cost-effective GPT-4.",
     "displayName": "GPT-4 Turbo",
     "modelName": "gpt-4-turbo",
     "pricing": {
@@ -78,7 +78,7 @@
   },
   "openai-gpt-4": {
     "category": ["Chat"],
-    "description": "",
+    "description": "Legacy GPT-4: Flagship conversational dialogue model.",
     "displayName": "GPT-4",
     "modelName": "gpt-4",
     "pricing": {
@@ -89,7 +89,7 @@
   },
   "openai-gpt-3.5-turbo": {
     "category": ["Chat"],
-    "description": "",
+    "description": "Legacy GPT-3.5: Balanced, reliable chat model.",
     "displayName": "GPT-3.5 Turbo",
     "modelName": "gpt-3.5-turbo",
     "pricing": {
@@ -100,7 +100,7 @@
   },
   "perplexity-sonar-reasoning-pro": {
     "category": ["Search", "Reason"],
-    "description": "",
+    "description": "Professional model merging reasoning and search.",
     "displayName": "Sonar Reasoning Pro",
     "modelName": "sonar-reasoning-pro",
     "pricing": {
@@ -112,7 +112,7 @@
   },
   "perplexity-sonar-reasoning": {
     "category": ["Search", "Reason"],
-    "description": "",
+    "description": "Versatile model fusing search with reasoning.",
     "displayName": "Sonar Reasoning",
     "modelName": "sonar-reasoning",
     "pricing": {
@@ -124,7 +124,7 @@
   },
   "perplexity-sonar-pro": {
     "category": ["Search"],
-    "description": "",
+    "description": "Premium search model for high-accuracy retrieval.",
     "displayName": "Sonar Pro",
     "modelName": "sonar-pro",
     "pricing": {
@@ -136,7 +136,7 @@
   },
   "perplexity-sonar": {
     "category": ["Search"],
-    "description": "",
+    "description": "Efficient search model for rapid information access.",
     "displayName": "Sonar",
     "modelName": "sonar",
     "pricing": {

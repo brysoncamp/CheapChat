@@ -11,7 +11,8 @@ import { useState } from "react";
 import "../../styles/global.css";
 
 const Layout = ({ children }) => {
-  const [selectedModel, setSelectedModel] = useState("perplexity-sonar");
+  const [selectedModel, setSelectedModel] = useState("openai-gpt-4");
+  const [lastNonSearchSelectedModel, setLastNonSearchSelectedModel] = useState("openai-gpt-4");
 
   return (
     <React.StrictMode>
@@ -19,7 +20,7 @@ const Layout = ({ children }) => {
         <Flex>
           <Sidebar selectedModel={selectedModel} setSelectedModel={setSelectedModel} />
           <Content>
-            {React.cloneElement(children, { selectedModel, setSelectedModel })}
+            {React.cloneElement(children, { selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel })}
           </Content>
         </Flex>
       </AuthProvider>
