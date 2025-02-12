@@ -1,17 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
 
+import modelsData from "../data/models.json";
+import { navigate } from "vike/client/router";
+
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 const MAX_RETRIES = 5;
 
-const useWebSocket = (setIsStreaming) => {
+const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages) => {
   const [socket, setSocket] = useState(null);
-  const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const messageQueue = useRef([]);
   const reconnectAttempts = useRef(0);
   const latestMessageRef = useRef("");
+  const lastModelRef = useRef(null);
 
   const connectWebSocket = async () => {
     try {
@@ -45,24 +48,35 @@ const useWebSocket = (setIsStreaming) => {
           console.log("📩 Message Received:", data);
 
           if (data.conversationId) {
-            window.history.pushState({}, "", `/c/${data.conversationId}`);
+            // window.history.pushState({}, "", `/c/${data.conversationId}`);
+            //navigate(`/c/${data.conversationId}`);
+            window.history.replaceState({}, "", `/c/${data.conversationId}`);
+
           }
 
-          if (data.text || data.message) {
-            const newMessage = data.text || data.message;
-            setCurrentMessage(newMessage);
-            latestMessageRef.current = newMessage;
+          if (data.text) {
+            setCurrentMessage((prev) => {
+              latestMessageRef.current = prev + data.text;
+              return latestMessageRef.current;
+            });
+          }
+
+          if (data.message) {
+            setCurrentMessage(data.message);
+            latestMessageRef.current = data.message;
           }
 
           if (data.done || data.timeout || data.canceled) {
-            console.log("setting ai-message", latestMessageRef.current);
-            setIsStreaming(false);
-            const finalMessage = latestMessageRef.current.trim();
-            if (finalMessage) {
-              setMessages((prev) => [...prev, { sender: "ai-message", text: finalMessage }]);
-            }
-            setCurrentMessage("");
-            latestMessageRef.current = ""; // Reset AFTER setting state
+            setTimeout(() => {
+              console.log("setting ai-message", latestMessageRef.current);
+              setIsStreaming(false);
+              const finalMessage = latestMessageRef.current.trim();
+              if (finalMessage) {
+                setMessages((prev) => [...prev, { sender: lastModelRef.current, text: finalMessage }]);
+              }
+              setCurrentMessage("");
+              latestMessageRef.current = ""; // Reset AFTER setting state
+            }, 100);
           }
           
         } catch (error) {
@@ -98,7 +112,10 @@ const useWebSocket = (setIsStreaming) => {
 
   const sendMessage = (message) => {
     if (message.trim()) {
-      const payload = { action: "perplexity", message, sessionId };
+      const modelName = modelsData[selectedModel].modelName;
+      lastModelRef.current = selectedModel;
+      setLastModel(selectedModel);
+      const payload = { action: modelName, message, sessionId };
       setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
 
       if (socket && socket.readyState === WebSocket.OPEN) {
@@ -122,7 +139,7 @@ const useWebSocket = (setIsStreaming) => {
     connectWebSocket();
   }, []);
 
-  return { messages, currentMessage, sendMessage, cancelMessage };
+  return { currentMessage, sendMessage, cancelMessage };
 };
 
 export default useWebSocket;

@@ -13,7 +13,7 @@ const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
       const availableVoices = window.speechSynthesis.getVoices();
       if (!availableVoices.length) return;
 
-      console.log("Available voices:", availableVoices);
+      //console.log("Available voices:", availableVoices);
 
       const preferredVoice =
         availableVoices.find(v => v.name === "Microsoft Ryan Online (Natural) - English (United Kingdom)") ||
@@ -30,7 +30,7 @@ const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
 
     // Cancel speech in case the component unmounts in a SPA scenario
     return () => {
-      console.log("Cleaning up on unmount");
+      //console.log("Cleaning up on unmount");
       window.speechSynthesis.cancel();
       clearTimeout(resumeTimeoutRef.current);
     };
@@ -73,7 +73,7 @@ const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
    * from being auto-paused on some browsers.
    */
   const resumeInfinity = () => {
-    console.log("Resuming speech to avoid auto-pause...");
+    //console.log("Resuming speech to avoid auto-pause...");
     window.speechSynthesis.pause();  // "Kick" the synth
     window.speechSynthesis.resume(); // then resume
     resumeTimeoutRef.current = setTimeout(resumeInfinity, 5000);
@@ -86,7 +86,7 @@ const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
       return;
     }
 
-    console.log("Starting speech...");
+    //console.log("Starting speech...");
     setIsSpeaking(true); // Provide immediate UI feedback
 
     // Cancel any currently playing speech
@@ -99,18 +99,18 @@ const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
     utterance.rate = 1;
 
     utterance.onstart = () => {
-      console.log("Speech actually started with:", selectedVoice.name);
+      //console.log("Speech actually started with:", selectedVoice.name);
       resumeInfinity();
     };
 
     utterance.onend = () => {
-      console.log("Speech finished.");
+      //console.log("Speech finished.");
       setIsSpeaking(false);
       clearTimeout(resumeTimeoutRef.current);
     };
 
     utterance.onerror = (err) => {
-      console.error("Speech synthesis error:", err);
+      //console.error("Speech synthesis error:", err);
       setIsSpeaking(false);
       clearTimeout(resumeTimeoutRef.current);
     };
@@ -123,7 +123,7 @@ const TextToSpeechButton = ({ text, isSpeaking, setIsSpeaking }) => {
     if (!isSpeaking) {
       speak();
     } else {
-      console.log("Stopping speech.");
+      //console.log("Stopping speech.");
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
       clearTimeout(resumeTimeoutRef.current);

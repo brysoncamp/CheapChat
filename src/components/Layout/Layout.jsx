@@ -11,8 +11,8 @@ import { useState } from "react";
 import "../../styles/global.css";
 
 const Layout = ({ children }) => {
-  const [selectedModel, setSelectedModel] = useState("openai-gpt-4");
-  const [lastNonSearchSelectedModel, setLastNonSearchSelectedModel] = useState("openai-gpt-4");
+  const [selectedModel, setSelectedModel] = useState("gpt-4o-mini");
+  const [lastNonSearchSelectedModel, setLastNonSearchSelectedModel] = useState("gpt-4o-mini");
 
   return (
     <React.StrictMode>

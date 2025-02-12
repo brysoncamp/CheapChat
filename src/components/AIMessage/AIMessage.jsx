@@ -1,15 +1,21 @@
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 import RenderMarkdown from "../RenderMarkdown/RenderMarkdown";
 import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
-import openaiUrl from "../../assets/providers/openai.svg";
+import ProviderLogo from "../ProviderLogo/ProviderLogo";
 import "./AIMessage.css";
 
-const AIMessage = ({ message, isLoading = false }) => {
+import modelsData from "../../data/models.json";
+
+const AIMessage = ({ message, model, isLoading = false }) => {
+
+  const modelName = modelsData[model]?.displayName;
+  const provider = modelsData[model]?.provider;
+  
   return (
     <div className="ai-message-wrapper">
-      <TooltipWrapper info="GPT-4o" className="ai-name-tooltip" position="W">
+      <TooltipWrapper info={modelName} className="ai-name-tooltip" position="W">
         <div className="ai-message-icon unselectable">
-          <img src={openaiUrl} alt="OpenAI" draggable="false" />
+          <ProviderLogo provider={provider} />
         </div>
       </TooltipWrapper>
       <div className="ai-message-container">

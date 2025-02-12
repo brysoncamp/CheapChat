@@ -29,7 +29,7 @@ const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, re
   const selectedModelName = modelsData[selectedModel].displayName;
   const selectedModelCategory = modelsData[selectedModel].category[0];
   //const selectedModelName = "";
-  console.log(selectedModelName);
+  //console.log(selectedModelName);
   //console.log
 
   return (

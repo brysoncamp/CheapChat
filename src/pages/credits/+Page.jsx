@@ -35,7 +35,7 @@ function Page() {
         },
         body: JSON.stringify({ 
           amount: Number(amount), 
-          userId: user?.userId || "unknown"
+          userId: user?.userId || "unknown" // not sure i need to be sending this, decoded from token
         })
       });
 

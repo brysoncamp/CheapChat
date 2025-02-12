@@ -1,12 +1,12 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
 
 import MessagesContainer from "../MessagesContainer/MessagesContainer";
 import useWebSocket from "../../hooks/useWebSocket";
 import useScrollManager from "../../hooks/useScrollManager";
 
-const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming, hasStreamed }, ref) => {
-
-  const { messages, currentMessage, sendMessage, cancelMessage } = useWebSocket(setIsStreaming);
+const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming, hasStreamed, selectedModel, messages, setMessages, aiExplorer }, ref) => {
+  const [lastModel, setlastModel] = useState(null);
+  const { currentMessage, sendMessage, cancelMessage } = useWebSocket(setIsStreaming, selectedModel, setlastModel, setMessages);
   useScrollManager(bodyRef, messages, currentMessage);
 
   useImperativeHandle(ref, () => ({
@@ -15,7 +15,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming, hasStr
   }));
 
   return (
-    hasStreamed && <MessagesContainer messages={messages} currentMessage={currentMessage} isStreaming={isStreaming} />
+    (hasStreamed || !aiExplorer) && <MessagesContainer messages={messages} currentMessage={currentMessage} isStreaming={isStreaming} lastModel={lastModel} />
   );
 });
 

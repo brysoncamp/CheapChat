@@ -19,10 +19,18 @@ const InputContainer = ({ inputValue, setInputValue, isStreaming, onSend, onStop
         textAreaRef.current.focus();
       }
     };
-
-    inputRef.current.addEventListener("click", handleClick);
-    return () => inputRef.current.removeEventListener("click", handleClick);
+  
+    if (inputRef.current) {
+      inputRef.current.addEventListener("click", handleClick);
+    }
+  
+    return () => {
+      if (inputRef.current) { // ✅ Safety check before removing listener
+        inputRef.current.removeEventListener("click", handleClick);
+      }
+    };
   }, []);
+  
 
   return (
     <div className="input-container" ref={inputRef}>

@@ -48,7 +48,7 @@ const AIExplorer = ({ hasStreamed, selectedModel, setSelectedModel, setLastNonSe
     if (modelKey !== selectedModel) {
       setSelectedModel(modelKey);
     }
-    console.log("model category", modelsData[modelKey].category);
+    //console.log("model category", modelsData[modelKey].category);
     if (!modelsData[modelKey].category.includes("Search")) {
       setLastNonSearchSelectedModel(modelKey);
     }

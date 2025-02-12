@@ -1,5 +1,5 @@
 {
-  "openai-gpt-4o": {
+  "gpt-4o": {
     "category": ["Chat"],
     "description": "High-intelligence model for handling complex tasks.",
     "displayName": "GPT-4o",
@@ -10,7 +10,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-gpt-4o-mini": {
+  "gpt-4o-mini": {
     "category": ["Chat"],
     "description": "Optimized, fast model for cost-effective tasks.",
     "displayName": "GPT-4o mini",
@@ -21,7 +21,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-o1": {
+  "o1": {
     "category": ["Reason"],
     "description": "Advanced reasoning model for in-depth analysis.",
     "displayName": "OpenAI o1",
@@ -32,7 +32,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-o1-mini": {
+  "o1-mini": {
     "category": ["Reason"],
     "description": "Efficient reasoning model for smart problem-solving.",
     "displayName": "OpenAI o1-mini",
@@ -43,7 +43,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-o3-mini": {
+  "o3-mini": {
     "category": ["Reason"],
     "description": "Streamlined reasoning model for rapid analysis.",
     "displayName": "OpenAI o3-mini",
@@ -54,7 +54,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-chatgpt-4o-latest": {
+  "chatgpt-4o-latest": {
     "category": ["Chat"],
     "description": "Latest GPT-4o model use in ChatGPT.",
     "displayName": "ChatGPT 4o",
@@ -65,7 +65,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-gpt-4-turbo": {
+  "gpt-4-turbo": {
     "category": ["Chat"],
     "description": "Legacy GPT-4 Turbo: Faster, cost-effective GPT-4.",
     "displayName": "GPT-4 Turbo",
@@ -76,7 +76,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-gpt-4": {
+  "gpt-4": {
     "category": ["Chat"],
     "description": "Legacy GPT-4: Flagship conversational dialogue model.",
     "displayName": "GPT-4",
@@ -87,7 +87,7 @@
     },
     "provider": "OpenAI"
   },
-  "openai-gpt-3.5-turbo": {
+  "gpt-3.5-turbo": {
     "category": ["Chat"],
     "description": "Legacy GPT-3.5: Balanced, reliable chat model.",
     "displayName": "GPT-3.5 Turbo",
@@ -98,7 +98,7 @@
     },
     "provider": "OpenAI"
   },
-  "perplexity-sonar-reasoning-pro": {
+  "sonar-reasoning-pro": {
     "category": ["Search", "Reason"],
     "description": "Professional model merging reasoning and search.",
     "displayName": "Sonar Reasoning Pro",
@@ -110,7 +110,7 @@
     },
     "provider": "Perplexity"
   },
-  "perplexity-sonar-reasoning": {
+  "sonar-reasoning": {
     "category": ["Search", "Reason"],
     "description": "Versatile model fusing search with reasoning.",
     "displayName": "Sonar Reasoning",
@@ -122,7 +122,7 @@
     },
     "provider": "Perplexity"
   },
-  "perplexity-sonar-pro": {
+  "sonar-pro": {
     "category": ["Search"],
     "description": "Premium search model for high-accuracy retrieval.",
     "displayName": "Sonar Pro",
@@ -134,7 +134,7 @@
     },
     "provider": "Perplexity"
   },
-  "perplexity-sonar": {
+  "sonar": {
     "category": ["Search"],
     "description": "Efficient search model for rapid information access.",
     "displayName": "Sonar",
