@@ -13,7 +13,8 @@ const Sidebar = ({ selectedModel, setSelectedModel }) => {
   const navigateToRoot = (event) => {
     console.log("navigate to root");
     event.preventDefault();
-    window.location.href = "/"; // 🔥 Forces a full page reload
+    window.location.replace("/");
+    // 🔥 Forces a full page reload
   };
   
 

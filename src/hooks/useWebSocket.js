@@ -7,7 +7,7 @@ import { navigate } from "vike/client/router";
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 const MAX_RETRIES = 5;
 
-const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages) => {
+const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, conversationId, setConversationId) => {
   const [socket, setSocket] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [sessionId, setSessionId] = useState(null);
@@ -51,7 +51,7 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages) 
             // window.history.pushState({}, "", `/c/${data.conversationId}`);
             //navigate(`/c/${data.conversationId}`);
             window.history.replaceState({}, "", `/c/${data.conversationId}`);
-
+            setConversationId(data.conversationId);
           }
 
           if (data.text) {
@@ -115,7 +115,8 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages) 
       const modelName = modelsData[selectedModel].modelName;
       lastModelRef.current = selectedModel;
       setLastModel(selectedModel);
-      const payload = { action: modelName, message, sessionId };
+      const payload = { action: modelName, message, sessionId, conversationId };
+      console.log("sending message", payload);
       setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
 
       if (socket && socket.readyState === WebSocket.OPEN) {

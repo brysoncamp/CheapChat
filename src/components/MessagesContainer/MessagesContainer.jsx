@@ -4,7 +4,7 @@ import "./MessagesContainer.css";
 
 const MessagesContainer = ({ messages, currentMessage, isStreaming, lastModel }) => {
 
-  console.log("MessagesContainer messages:", messages);
+  //console.log("MessagesContainer messages:", messages);
   
   return (
     <div className="messages-container">
