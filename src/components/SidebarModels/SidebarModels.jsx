@@ -5,6 +5,7 @@ import ProviderLogo from "../ProviderLogo/ProviderLogo";
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 import plusUrl from "./plus.svg";
 import moreUrl from "./more.svg";
+import { navigate } from "vike/client/router";
 
 const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent }) => {
   const [modelsCount, setModelsCount] = useState(5);
@@ -26,12 +27,24 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
     if (window.location.pathname !== "/") {
       window.history.pushState({}, "", "/");
     }
+    navigate("/");
     resetContent();
   };
 
   const newModel = (model) => {
     setSelectedModel(model);
     navigateToRoot();
+  };
+
+  const modelClick = (model) => {
+    //console.log("is root or chat page", isRootOrChatPage);
+    const pathname = window.location.pathname;
+    if (pathname === "/" || pathname.startsWith("/c/")) {
+      setSelectedModel(model);
+    } else {
+      newModel(model);
+      console.log("should nav to root");
+    }
   };
 
   const addMoreModelsWithDelay = () => {
@@ -56,13 +69,16 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
       </TooltipWrapper>
       {displayedModels.map((model, index) => (
         <TooltipWrapper key={index} info={modelsData[model].displayName} position="E" offset={-8} enabled={isClosed}>
-          <div className={`sidebar-model ${isClosed ? 'sidebar-model-closed' : ''} ${selectedModel === model ? 'sidebar-model-selected' : ''} unselectable`} onClick={() => setSelectedModel(model)}>
+          <div className={`sidebar-model ${isClosed ? 'sidebar-model-closed' : ''} ${selectedModel === model ? 'sidebar-model-selected' : ''} unselectable`} onClick={() => modelClick(model)}>
             <ProviderLogo provider={modelsData[model].provider} className="sidebar-logos" />
             <p className="sidebar-model-names">{!isClosed ? modelsData[model].displayName : ""}</p>
             
-            {!isClosed && <div className="new-chat-model-button" onClick={() => newModel(model)}>
-              <img src={plusUrl} draggable="false"/>
-            </div>}
+            {!isClosed && 
+              <TooltipWrapper info="New chat" position="E" offset={16}>
+                <div className="new-chat-model-button" onClick={() => newModel(model)}>
+                  <img src={plusUrl} draggable="false"/>
+                </div>
+              </TooltipWrapper>}
           </div>
         </TooltipWrapper>
       ))}

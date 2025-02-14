@@ -29,14 +29,14 @@ const Layout = ({ children }) => {
   return (
     <React.StrictMode>
       <AuthProvider>
-        <StorageProvider initialValues={initialValues}>
+
           <Flex>
-            <Sidebar selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent}/>
+            <Sidebar selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent} setRootPage={setRootPage}/>
             <Content key={contentKey}>
               {React.cloneElement(children, { selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage })}
             </Content>
           </Flex>
-        </StorageProvider>
+ 
       </AuthProvider>
     </React.StrictMode>
   );

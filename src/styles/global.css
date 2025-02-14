@@ -46,7 +46,9 @@ button {
     image-rendering: crisp-edges; /* ✅ Ensures clear image rendering */
 }
 
-
+.align-start {
+    align-self: flex-start;
+}
 
 
 
