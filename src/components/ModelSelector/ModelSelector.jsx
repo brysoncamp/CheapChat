@@ -4,6 +4,7 @@ import webUrl from "./web.svg";
 
 import { useState, useEffect } from "react";
 import ProviderLogo from "../ProviderLogo/ProviderLogo";
+import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 
 import modelsData from "../../data/models.json";
 
@@ -44,26 +45,27 @@ const ModelSelector = ({ selectedModel, setSelectedModel, lastNonSearchSelectedM
     setDropdownOpen(false);
   };
   
+  // <TooltipWrapper />
 
   return (
     <>
       <div className="model-selector unselectable" onClick={() => setDropdownOpen(!dropdownOpen)} onBlur={() => setDropdownOpen(false)} tabIndex="0">
-        { /*<img className={`model-icon ${providerClassNames[modelProvider]}`} src={providerLogos[modelProvider]} alt="OpenAI" draggable="false" /> */ }
-        <ProviderLogo provider={modelProvider} horizontalMargins={true} />
+        <ProviderLogo provider={modelProvider} className="selector-logos" />
         { selectedModelName }
         <img className="selector-icon" src={selectorUrl} alt="dropdown" />
       </div>
-      <div className={`internet-icon unselectable ${inSearchMode ? "internet-icon-enabled" : ""}`} onClick={handleInternetClick}>
-        <img src={webUrl} alt="Internet" draggable="false" />
-      </div>
+      <TooltipWrapper info="Search" position="E" offset={12}>
+        <div className={`internet-icon unselectable ${inSearchMode ? "internet-icon-enabled" : ""}`} onClick={handleInternetClick}>
+          <img src={webUrl} alt="Internet" draggable="false" />
+        </div>
+      </TooltipWrapper>
       <div className={`model-selector-dropdown ${dropdownOpen ? "model-selector-dropdown-enabled" : ""}`}>
         {Object.keys(modelsData).map((model, index) => {
           return (
             <div key={index} className="model-selector-option" 
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => onModelSelect(model)}>
-                { /* <img className={`model-icon ${providerClassNames[modelsData[model].provider]}`} src={providerLogos[modelsData[model].provider]} alt="OpenAI" draggable="false" /> */ }
-                <ProviderLogo provider={modelsData[model].provider} horizontalMargins={true} />
+                <ProviderLogo provider={modelsData[model].provider} className="selector-logos" />
                 {modelsData[model].displayName}
             </div>
           )

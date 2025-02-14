@@ -84,3 +84,7 @@
     margin: 1rem;
     height: 2.25rem;
 }
+
+.align-start {
+    align-self: flex-start;
+}

@@ -1,30 +1,26 @@
 import React, { useState } from "react";
 
-import logoUrl from "/logo.svg";
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
-import { navigate } from "vike/client/router";
+import SidebarModels from "../SidebarModels/SidebarModels";
+import LogoContainer from "../LogoContainer/LogoContainer";
+
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useStorage } from '../StorageContext/StorageContext';
 
 import "./Sidebar.css";
 
-const Sidebar = ({ selectedModel, setSelectedModel }) => {
+const Sidebar = ({ selectedModel, setSelectedModel, resetContent }) => {
 
+  //const [isClosed, setIsClosed] = useState(false);
+  //const [isClosed, setIsClosed] = useLocalStorage("sidebarClosed", true);
+  //import { useStorage } from './StorageProvider';
   const [isClosed, setIsClosed] = useState(false);
-
-  const navigateToRoot = (event) => {
-    console.log("navigate to root");
-    event.preventDefault();
-    window.location.replace("/");
-    // 🔥 Forces a full page reload
-  };
-  
 
   return (
     <>
       <div className={`sidebar ${isClosed ? 'sidebar-closed' : ''}`}>
-        <a className="logo-container unselectable" href="/" onClick={navigateToRoot} draggable="false">
-          <img className="logo" src={logoUrl} alt="logo" draggable="false" />
-          <p className="logo-name">CheapChat</p>
-        </a>
+        <LogoContainer isClosed={isClosed} resetContent={resetContent} />
+        <SidebarModels isClosed={isClosed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent} />
       </div>
       <div className="divider">
         <div className="divider-line"></div>

@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
-
 import modelsData from "../data/models.json";
-import { navigate } from "vike/client/router";
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 const MAX_RETRIES = 5;
@@ -11,10 +9,12 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
   const [socket, setSocket] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [sessionId, setSessionId] = useState(null);
+  
   const messageQueue = useRef([]);
   const reconnectAttempts = useRef(0);
   const latestMessageRef = useRef("");
   const lastModelRef = useRef(null);
+  const latestSocketRef = useRef(null); // Tracks the latest WebSocket connection
 
   const connectWebSocket = async () => {
     try {
@@ -30,7 +30,13 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
       const uniqueId = `${userId}-${Math.random().toString(36).slice(2, 11)}`;
       setSessionId(uniqueId);
 
+      // Close the previous WebSocket before opening a new one
+      if (latestSocketRef.current) {
+        latestSocketRef.current.close();
+      }
+
       const ws = new WebSocket(`${WEBSOCKET_URL}?token=${token}&sessionId=${uniqueId}`);
+      latestSocketRef.current = ws; // Track the latest socket
 
       ws.onopen = () => {
         console.log("✅ WebSocket Connected with sessionId:", uniqueId);
@@ -44,12 +50,12 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
 
       ws.onmessage = (event) => {
         try {
+          if (ws !== latestSocketRef.current) return; // Ignore old connections
+
           const data = JSON.parse(event.data);
           console.log("📩 Message Received:", data);
 
           if (data.conversationId) {
-            // window.history.pushState({}, "", `/c/${data.conversationId}`);
-            //navigate(`/c/${data.conversationId}`);
             window.history.replaceState({}, "", `/c/${data.conversationId}`);
             setConversationId(data.conversationId);
           }
@@ -87,6 +93,7 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
       ws.onerror = (error) => console.error("❌ WebSocket Error:", error);
 
       ws.onclose = () => {
+        if (ws !== latestSocketRef.current) return; // Ignore old sockets closing
         console.log("🔴 WebSocket Disconnected");
         setSocket(null);
         attemptReconnect();
@@ -119,7 +126,7 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
       console.log("sending message", payload);
       setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
 
-      if (socket && socket.readyState === WebSocket.OPEN) {
+      if (socket && socket === latestSocketRef.current && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(payload));
       } else {
         messageQueue.current.push(payload);
@@ -131,13 +138,18 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
   };
 
   const cancelMessage = () => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
+    if (socket && socket === latestSocketRef.current && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({ action: "cancel", sessionId }));
     }
   };
 
   useEffect(() => {
     connectWebSocket();
+    return () => {
+      if (latestSocketRef.current) {
+        latestSocketRef.current.close(); // Close socket when component unmounts
+      }
+    };
   }, []);
 
   return { currentMessage, sendMessage, cancelMessage };

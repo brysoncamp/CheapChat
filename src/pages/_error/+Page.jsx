@@ -3,12 +3,20 @@ import { useState, useEffect } from "react";
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
 import ChatInterface from "../../components/ChatInterface/ChatInterface";
 
-const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel }) => {
+const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage = false }) => {
+
+  const [messages, setMessages] = useState([]);
+
+  if (rootPage) {
+    return (
+      <ChatInterface selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} messages={messages} setMessages={setMessages} aiExplorer={true} />
+    );
+  }
+
 
   const [isChatPage, setIsChatPage] = useState(true);
   const [isErrorPage, setIsErrorPage] = useState(false);
   const [conversationId, setConversationId] = useState(null);
-  const [messages, setMessages] = useState([]);
 
   const { ensureValidToken } = useAuth();
 

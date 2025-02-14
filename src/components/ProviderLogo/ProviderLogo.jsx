@@ -2,7 +2,7 @@ import openaiUrl from "../../assets/providers/openai.svg";
 import perplexityUrl from "../../assets/providers/perplexity.svg";
 import "./ProviderLogo.css";
 
-const ProviderLogo = ({ provider, horizontalMargins = false }) => {
+const ProviderLogo = ({ provider, className }) => {
 
   const providerLogos = {
     OpenAI: openaiUrl,
@@ -15,7 +15,7 @@ const ProviderLogo = ({ provider, horizontalMargins = false }) => {
   };
 
   return (
-    <img className={`${horizontalMargins ? "horizontal-margins" : ""} ${providerClassNames[provider]}`} src={providerLogos[provider]} alt={provider} draggable="false" />
+    <img className={`${className} ${providerClassNames[provider]}`} src={providerLogos[provider]} alt={provider} draggable="false" />
   )
 };
 

@@ -3,13 +3,13 @@
     display: flex;
     flex-direction: column;
     line-height: 1.8em;
-    padding: 0 1rem;
+    /*padding: 0 1rem;*/
     width: 15rem;
     overflow: hidden;
 }
 
 .sidebar-closed {
-    width: 4rem;
+    width: 5rem;
 }
 
 .divider {
@@ -111,25 +111,3 @@
     left: 14px;
     background-color: #717b8a;
 }
-
-/* Sidebar content */
-
-
-.logo {
-    width: 1.5rem;
-
-}
-
-.logo-container {
-    display: flex;    
-    flex-direction: row;
-    align-items: center;
-}
-
-.logo-name {
-    font-weight: 500;
-    margin-left: 0.45rem;
-    font-family: "Outfit", sans-serif;
-    font-size: 1rem;
-}
-

@@ -1,0 +1,142 @@
+.sidebar-models {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+}
+
+.sidebar-model {
+    background-color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    color: #333;
+    transition: color 0.15s ease-in-out;
+    overflow: hidden;
+}
+
+.sidebar-model-selected {
+    background-color: #f6f8fa;
+    color: #000000;
+}
+
+.sidebar-model p {
+    margin-left: 0.25rem;
+}
+
+.sidebar-model:hover {
+    color: #000000;
+    background-color: #f6f8fa;
+}
+
+.sidebar-model img {
+    opacity: 0.8;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.sidebar-model-selected img {
+    opacity: 1;
+}
+
+.sidebar-model:hover img {
+    opacity: 1;
+}
+
+.new-chat-button {
+    align-self: flex-start;
+    height: 2rem;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border-radius: 1rem;
+    margin: 0 0 0.25rem 0rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.new-chat-button:hover {
+    background-color: #f6f8fa;
+}
+
+.new-chat-button img {
+    height: 1.25rem; 
+}
+
+.new-chat-button p {
+    margin-left: 0.25rem;
+    margin-right: 0.675rem;
+    margin-top: 1rem;
+}
+
+.new-chat-model-button {
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 3rem;
+    max-width: 2.5rem;
+    min-width: 2rem;
+}
+
+.sidebar-model:hover .new-chat-model-button {
+    background: linear-gradient(to right, rgba(246, 248, 250, 0) -20%, #f6f8fa 60%);
+}
+
+.new-chat-model-button img {
+    height: 1.25rem;
+    opacity: 0;
+    transition: filter 0.15s ease-in-out;
+    filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(1%) hue-rotate(173deg) brightness(99%) contrast(100%);
+}
+
+.new-chat-model-button:hover img {
+    filter: none;
+}
+
+.new-chat-button:hover .new-chat-model-button img {
+    opacity: 1;
+  
+}
+
+.flex-grow {
+    flex: 1;
+}
+
+.more-models-button {
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 1rem;
+
+}
+
+.more-models-button img {
+    height: 1.5rem;
+    transition: transform 0.15s ease-in-out;
+    margin-left: -1rem;
+}
+
+.more-models-button:hover img {
+    transform: scale(1.25);
+}
+
+.sidebar-model-names {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}

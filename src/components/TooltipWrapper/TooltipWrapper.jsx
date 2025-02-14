@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./TooltipWrapper.css";
 
-const TooltipWrapper = ({ children, info, className, position = "S", offset = 8 }) => {
+const TooltipWrapper = ({ children, info, className, position = "S", offset = 8, enabled = true }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipStyle, setTooltipStyle] = useState({});
@@ -63,7 +63,7 @@ const TooltipWrapper = ({ children, info, className, position = "S", offset = 8 
       style={{ display: "inline-block", position: "relative" }}
     >
       {children}
-      {showTooltip && (
+      {(showTooltip && enabled) && (
         <div className="tooltip" style={tooltipStyle}>
           {info}
           <div className={`tooltip-arrow tooltip-arrow--${position.toLowerCase()}`}></div>

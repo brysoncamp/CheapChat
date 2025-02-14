@@ -14,8 +14,6 @@ const ChatInterface = ({ selectedModel, setSelectedModel, lastNonSearchSelectedM
   const [hasStreamed, setHasStreamed] = useState(false);
   const [conversationId, setConversationId] = useState(windowConversationId);
 
-  console.log("ChatInterface conversationId:", conversationId);
-
   const webSocketChatRef = useRef(null); // ✅ Create ref for WebSocketChat
   const bodyRef = useRef(null);
 
