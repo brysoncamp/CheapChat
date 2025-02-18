@@ -5,7 +5,7 @@ import modelsData from "../data/models.json";
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 const MAX_RETRIES = 5;
 
-const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, conversationId, setConversationId) => {
+const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, conversationId, setConversationId, setConversationName) => {
   const [socket, setSocket] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [sessionId, setSessionId] = useState(null);
@@ -70,6 +70,10 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
           if (data.message) {
             setCurrentMessage(data.message);
             latestMessageRef.current = data.message;
+          }
+
+          if (data.title) {
+            setConversationName(data.title);
           }
 
           if (data.done || data.timeout || data.canceled) {

@@ -54,7 +54,7 @@ const ModelSelector = ({ selectedModel, setSelectedModel, lastNonSearchSelectedM
         { selectedModelName }
         <img className="selector-icon" src={selectorUrl} alt="dropdown" />
       </div>
-      <TooltipWrapper info="Search" position="E" offset={12}>
+      <TooltipWrapper info="Search the web" position="E" offset={12}>
         <div className={`internet-icon unselectable ${inSearchMode ? "internet-icon-enabled" : ""}`} onClick={handleInternetClick}>
           <img src={webUrl} alt="Internet" draggable="false" />
         </div>

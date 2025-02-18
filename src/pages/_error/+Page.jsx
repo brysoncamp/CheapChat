@@ -18,7 +18,7 @@ const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, set
   const [isErrorPage, setIsErrorPage] = useState(false);
   const [conversationId, setConversationId] = useState(null);
 
-  const { ensureValidToken } = useAuth();
+  const { user, ensureValidToken } = useAuth();
 
   useEffect(() => {
     console.log(window.location.pathname);
@@ -41,7 +41,12 @@ const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, set
       const fetchData = async () => {
         try {
 
+          console.log("USER", user);
+          
           const token = await ensureValidToken();
+
+          console.log("Token received in errir page:", token);
+        
           if (!token) {
             throw new Error("Unauthorized: Failed to get authentication token.");
           }
