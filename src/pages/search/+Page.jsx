@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import ChatInterface from "../../components/ChatInterface/ChatInterface";
+import useConversation from "../../hooks/useConversation";
 
+const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage }) => {
 
-const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage = false }) => {
-
-  const [messages, setMessages] = useState([]);
+  const { messages, setMessages, conversationId, isChatPage, isErrorPage } = useConversation();
 
   /*
   if (rootPage) {
@@ -13,12 +13,27 @@ const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, set
       <ChatInterface selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} messages={messages} setMessages={setMessages} aiExplorer={true} />
     );
   }*/
+ 
 
   return (
-    <div>
-      <h1>Search</h1>
-    </div>
+    isChatPage ? (
+      <ChatInterface
+        key={conversationId}
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}
+        lastNonSearchSelectedModel={lastNonSearchSelectedModel}
+        setLastNonSearchSelectedModel={setLastNonSearchSelectedModel}
+        messages={messages}
+        setMessages={setMessages}
+        windowConversationId={conversationId}
+      />
+    ) : (
+      <div>
+        <h1>Search</h1>
+      </div>
+    )
   );
+    
 };
 
 export default Page;

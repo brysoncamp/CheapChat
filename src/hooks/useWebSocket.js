@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchAuthSession } from "aws-amplify/auth";
 import modelsData from "../data/models.json";
+import { useAuth } from "../components/AuthProvider/AuthProvider";
 
 const WEBSOCKET_URL = "wss://ws.cheap.chat";
 const MAX_RETRIES = 5;
@@ -15,6 +16,8 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
   const latestMessageRef = useRef("");
   const lastModelRef = useRef(null);
   const latestSocketRef = useRef(null); // Tracks the latest WebSocket connection
+
+  const { user } = useAuth();
 
   const connectWebSocket = async () => {
     try {
@@ -126,8 +129,11 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
       const modelName = modelsData[selectedModel].modelName;
       lastModelRef.current = selectedModel;
       setLastModel(selectedModel);
+      //const userId = user.userId;
       const payload = { action: modelName, message, sessionId, conversationId };
       console.log("sending message", payload);
+      //console.log("sending user-id with message", userId);
+      //console.log("sending based on user", user);
       setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
 
       if (socket && socket === latestSocketRef.current && socket.readyState === WebSocket.OPEN) {

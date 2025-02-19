@@ -5,8 +5,40 @@
     line-height: 1.8em;
     /*padding: 0 1rem;*/
     width: 15rem;
+    height: 100vh;
     overflow: hidden;
 }
+
+.sidebar-scroll-container {
+    overflow-y: overlay;
+    width: 14rem;
+}
+
+.sidebar-scroll-container-closed {
+    width: 4rem;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar {
+    width: 0.375rem;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar-thumb {
+    background: #e9eaeb;
+    border-radius: 3px;
+}
+
+.sidebar-scroll-container:hover::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
 
 .sidebar-closed {
     width: 5rem;

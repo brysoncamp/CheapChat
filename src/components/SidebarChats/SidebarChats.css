@@ -11,7 +11,7 @@
     font-size: 0.875rem;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     border-radius: 1rem;
-    margin: 0 0 0.25rem 0rem;
+    margin: 0; /* margin: 0 0 0.5rem 0rem; */
     cursor: pointer;
     transition: background-color 0.15s ease-in-out;
     flex-shrink: 0;
@@ -32,4 +32,40 @@
     margin-left: 0.25rem;
     margin-right: 0.675rem;
     margin-top: 1rem;
+}
+
+.conversations-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 0.25rem;
+}
+
+.conversation {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.conversation:hover {
+    background-color: #f6f8fa;
+}
+
+.search-button-background {
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding-bottom: 0.25rem;
+}
+
+.conversation-selected {
+    background-color: #f6f8fa;
 }

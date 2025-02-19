@@ -7,7 +7,7 @@ import plusUrl from "./plus.svg";
 import moreUrl from "./more.svg";
 import { navigate } from "vike/client/router";
 
-const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent }) => {
+const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent, setRootPage }) => {
   const [modelsCount, setModelsCount] = useState(5);
   const [isMoreModels, setIsMoreModels] = useState(true);
   const [displayedModels, setDisplayedModels] = useState(Object.keys(modelsData).slice(0, 5)); // Start with initial models
@@ -28,7 +28,8 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
       window.history.pushState({}, "", "/");
     }
     navigate("/");
-    resetContent();
+    setRootPage(true);
+    setTimeout(() => resetContent(), 100);
   };
 
   const newModel = (model) => {
@@ -61,14 +62,16 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
 
   return (    
     <div className="sidebar-models">
-      <TooltipWrapper className="align-start" info="New chat" position="E" offset={12} enabled={isClosed}>
-        <div className="new-chat-button unselectable" onClick={navigateToRoot}>
-          <img src={plusUrl} draggable="false"/>
-          {!isClosed && <p>New chat</p>}
-        </div>
-      </TooltipWrapper>
+      <div className="new-chat-button-background">
+        <TooltipWrapper className="align-start" info="New chat" position="E" offset={12} enabled={isClosed}>
+          <div className="new-chat-button unselectable" onClick={navigateToRoot}>
+            <img src={plusUrl} draggable="false"/>
+            {!isClosed && <p>New chat</p>}
+          </div>
+        </TooltipWrapper>
+      </div>
       {displayedModels.map((model, index) => (
-        <TooltipWrapper key={index} info={modelsData[model].displayName} position="E" offset={-8} enabled={isClosed}>
+        <TooltipWrapper key={index} info={modelsData[model].displayName} position="E" offset={8} enabled={isClosed}>
           <div className={`sidebar-model ${isClosed ? 'sidebar-model-closed' : ''} ${selectedModel === model ? 'sidebar-model-selected' : ''} unselectable`} onClick={() => modelClick(model)}>
             <ProviderLogo provider={modelsData[model].provider} className="sidebar-logos" />
             <p className="sidebar-model-names">{!isClosed ? modelsData[model].displayName : ""}</p>
@@ -83,7 +86,7 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
         </TooltipWrapper>
       ))}
       {isMoreModels && (
-        <TooltipWrapper info="More" position="E" offset={isClosed ? -10 : -90}>
+        <TooltipWrapper info="More" position="E" offset={isClosed ? 4 : -74}>
           <div className="more-models-button">
             <img src={moreUrl} draggable="false" onClick={addMoreModelsWithDelay}/>
           </div>

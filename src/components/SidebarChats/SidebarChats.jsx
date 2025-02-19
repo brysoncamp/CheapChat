@@ -1,65 +1,84 @@
 import "./SidebarChats.css";
 
-
 import { useState, useEffect } from "react";
 
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 import searchUrl from "./search.svg";
 import { navigate } from "vike/client/router";
-import { useAuth } from '../AuthProvider/AuthProvider';
+import { useConversations } from "../ConversationsProvider/ConversationsProvider";
+import { getConversationId } from "../../hooks/useConversation";
 
 const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
 
-  const { ensureValidToken } = useAuth();
+  const [conversationId, setConversationId] = useState(getConversationId()); // Initialize correctly
+
+  useEffect(() => {
+    const updateConversationId = () => {
+      const newConversationId = getConversationId();
+      if (newConversationId !== conversationId) {
+        setConversationId(newConversationId);
+        console.log("URL CHANGED, conversationId updated:", newConversationId);
+      }
+    };
+
+    // Create an observer for changes in history state
+    const observer = new MutationObserver(updateConversationId);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Handle manual navigation (e.g., clicking links or using `navigate()`)
+    const handleHistoryChange = () => {
+      updateConversationId();
+    };
+
+    window.addEventListener("popstate", handleHistoryChange);
+    window.addEventListener("pushstate", handleHistoryChange); // Custom event for pushState
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("popstate", handleHistoryChange);
+      window.removeEventListener("pushstate", handleHistoryChange);
+    };
+  }, [conversationId]);
+
+
+  const { conversations } = useConversations();
 
   const navigateToSearch = () => {
     if (window.location.pathname !== "/search") {
       window.history.pushState({}, "", "/search");
     }
     setRootPage(false);
-    navigate("/search"); // Vike's client-side navigation
+    navigate("/search");
     setTimeout(() => resetContent(), 100);
   };
 
-  useEffect(() => {
-    setTimeout(async () => {  // Delay execution slightly
-      try {
-        const token = await ensureValidToken();
-        console.log(ensureValidToken);
-        console.log("Token received in SidebarChats:", token);
-        
-        if (!token) {
-          throw new Error("Unauthorized: Failed to get authentication token.");
-        }
-  
-        const response = await fetch("https://api.cheap.chat/conversations/recent", {
-          method: 'GET',
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Origin": window.location.origin
-          }
-        });
-  
-        if (!response.ok) {
-          console.error('Network response was not ok');
-        }
-  
-        console.log("response", response);
-      } catch (error) {
-        console.error("Error fetching recent conversations:", error);
-      }
-    }, 10000);  // Small delay to wait for auth to be ready
-  }, []);
-  
-
+  const navigateToConversation = (conversationId) => {
+    console.log("Navigate to conversation", conversationId);
+    window.history.pushState({}, "", `/c/${conversationId}`);
+    setRootPage(false);
+    console.log("setting root page to false");
+    setTimeout(() => resetContent(), 100);
+  };
+ 
   return (
     <div className="sidebar-chats">
-      <TooltipWrapper className="align-start" info="Search chats" position="E" offset={12} enabled={isClosed}>
-        <div className="search-button unselectable" onClick={navigateToSearch}>
-          <img src={searchUrl} draggable="false"/>
-          {!isClosed && <p>Search</p>}
-        </div>
-      </TooltipWrapper>
+      <div className="search-button-background">
+        <TooltipWrapper className="align-start" info="Search chats" position="E" offset={12} enabled={isClosed}>
+          <div className="search-button unselectable" onClick={navigateToSearch}>
+            <img src={searchUrl} draggable="false"/>
+            {!isClosed && <p>Search</p>}
+          </div>
+        </TooltipWrapper>
+      </div>
+      {!isClosed && <div className="conversations-container">
+        {conversations.length > 0 && (
+          conversations.map((chat) => (
+            <div key={chat.conversationId} className={`conversation ${conversationId === chat.conversationId ? "conversation-selected" : ""}`} onClick={() => navigateToConversation(chat.conversationId)}>
+              {chat.title || "Untitled Chat"}
+            </div>
+          ))
+        )}
+      </div>}
     </div>
   )
 };

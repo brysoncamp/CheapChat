@@ -6,9 +6,18 @@ import LogoContainer from "../LogoContainer/LogoContainer";
 import SidebarChats from "../SidebarChats/SidebarChats";
 
 import "./Sidebar.css";
+import plusUrl from "./plus.svg";
 
 const Sidebar = ({ selectedModel, setSelectedModel, resetContent, setRootPage }) => {
   const [isClosed, setIsClosed] = useState(false);
+
+  const navigateToRoot = () => {
+    if (window.location.pathname !== "/") {
+      window.history.pushState({}, "", "/");
+    }
+    navigate("/");
+    resetContent();
+  };
   //const [isRootOrChatPage, setIsRootOrChatPage] = useState(false);
   /*
   useEffect(() => {
@@ -33,8 +42,11 @@ const Sidebar = ({ selectedModel, setSelectedModel, resetContent, setRootPage })
     <>
       <div className={`sidebar ${isClosed ? 'sidebar-closed' : ''}`}>
         <LogoContainer isClosed={isClosed} resetContent={resetContent} />
-        <SidebarModels isClosed={isClosed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent} />
-        <SidebarChats isClosed={isClosed} resetContent={resetContent} setRootPage={setRootPage}/>
+      
+        <div className={`sidebar-scroll-container ${isClosed ? 'sidebar-scroll-container-closed' : ''}`}>
+          <SidebarModels isClosed={isClosed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent} setRootPage={setRootPage}/>
+          <SidebarChats isClosed={isClosed} resetContent={resetContent} setRootPage={setRootPage}/>
+        </div>
       </div>
       <div className="divider">
         <div className="divider-line"></div>

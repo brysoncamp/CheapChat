@@ -1,13 +1,13 @@
 export { Layout };
 
-import React from "react";
+import React, { useState, useMemo } from "react";
 
 import { AuthProvider } from "../AuthProvider/AuthProvider";
 import Flex from "../Flex/Flex";
 import Sidebar from "../Sidebar/Sidebar";
 import Content from "../Content/Content";
 import { StorageProvider } from "../StorageContext/StorageContext";
-import { useState } from "react";
+import { ConversationsProvider } from "../ConversationsProvider/ConversationsProvider";
 
 import "../../styles/global.css";
 
@@ -17,27 +17,34 @@ const Layout = ({ children }) => {
   const [contentKey, setContentKey] = useState(0);
   const [rootPage, setRootPage] = useState(null);
 
-  const initialValues = {
-    sidebarClosed: false,
-  }
-
   const resetContent = () => {
-    setRootPage(true);
-    setContentKey(prevKey => prevKey + 1); // Change key to force re-mount
+    //setRootPage(true);
+    setContentKey(prevKey => prevKey + 1);
   };
+
+  // 🛠️ Prevents Unnecessary Re-Renders by Memoizing Context Providers
+  const contextValue = useMemo(
+    () => ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage }),
+    [selectedModel, lastNonSearchSelectedModel, rootPage]
+  );
 
   return (
     <React.StrictMode>
       <AuthProvider>
-
+        <ConversationsProvider>
           <Flex>
-            <Sidebar selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent} setRootPage={setRootPage}/>
+            <Sidebar
+              selectedModel={selectedModel}
+              setSelectedModel={setSelectedModel}
+              resetContent={resetContent}
+              setRootPage={setRootPage}
+            />
             <Content key={contentKey}>
-              {React.cloneElement(children, { selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage })}
+              {React.cloneElement(children, contextValue)}
             </Content>
           </Flex>
- 
+        </ConversationsProvider>
       </AuthProvider>
     </React.StrictMode>
   );
-}
+};

@@ -2,6 +2,8 @@ export { onRenderHtml };
 
 import ReactDOMServer from "react-dom/server";
 import { Layout } from "../src/components/Layout/Layout";
+import { ConversationsProvider } from "../src/components/ConversationsProvider/ConversationsProvider";
+import { AuthProvider } from "../src/components/AuthProvider/AuthProvider";
 import { escapeInject, dangerouslySkipEscape } from "vike/server";
 import logoUrl from "/logo.svg";
 
@@ -10,12 +12,16 @@ const onRenderHtml = (pageContext) => {
   if (!Page) throw new Error("onRenderHtml expects pageContext.Page to be defined");
 
   const pageHtml = ReactDOMServer.renderToString(
-    <Layout pageContext={pageContext}>
-      <Page />
-    </Layout>
+    <AuthProvider>
+      <ConversationsProvider>
+        <Layout pageContext={pageContext}>
+          <Page />
+        </Layout>
+      </ConversationsProvider>
+    </AuthProvider>
   );
 
-  const title = pageContext.exports?.title || "CheapChat - Any AI, No Subscriptions";
+  const title = pageContext.exports?.title || "CheapChat";
   const desc = pageContext.exports?.description || "Access AI like GPT-4, Claude, and Gemini without subscriptions. Just pay for what you use.";
 
   const documentHtml = escapeInject`<!DOCTYPE html>

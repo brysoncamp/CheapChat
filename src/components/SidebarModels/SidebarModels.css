@@ -1,9 +1,9 @@
 .sidebar-models {
-    margin-top: 1rem;
+
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0rem 0.75rem 0.5rem 0.75rem;
     width: 100%;
 }
 
@@ -11,7 +11,7 @@
     background-color: #ffffff;
     padding: 0.25rem 0.5rem;
     border-radius: 1rem;
-    margin-right: 1rem;
+
     cursor: pointer;
     height: 2rem;
     display: flex;
@@ -22,6 +22,11 @@
     transition: color 0.15s ease-in-out;
     overflow: hidden;
 }
+
+/*
+.sidebar-model-closed {
+    width: 2
+}*/
 
 .sidebar-model-selected {
     background-color: #f6f8fa;
@@ -127,7 +132,7 @@
 .more-models-button img {
     height: 1.5rem;
     transition: transform 0.15s ease-in-out;
-    margin-left: -1rem;
+    margin-left: -0.125rem;
 }
 
 .more-models-button:hover img {
@@ -139,4 +144,11 @@
     text-overflow: ellipsis;
     flex: 1;
     min-width: 0;
+}
+
+.new-chat-button-background {
+    background-color: #fff;
+    position: sticky;
+    top: 0rem;
+    z-index: 100;
 }

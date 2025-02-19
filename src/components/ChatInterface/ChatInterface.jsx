@@ -59,7 +59,6 @@ const ChatInterface = ({ selectedModel, setSelectedModel, lastNonSearchSelectedM
         <Topbar selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} conversationName={conversationName}/>
         {aiExplorer && <AIExplorer hasStreamed={hasStreamed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} /> }
         {(!aiExplorer && messages.length == 0) && <ChatLoading />}
-        { /* <ChatLoading /> */}
         <WebSocketChat ref={webSocketChatRef} bodyRef={bodyRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} hasStreamed={hasStreamed} selectedModel={selectedModel} messages={messages} setMessages={setMessages} aiExplorer={aiExplorer} conversationId={conversationId} setConversationId={setConversationId} setConversationName={setConversationName} />
       </div>
       <InputContainer inputValue={inputValue} setInputValue={setInputValue} isStreaming={isStreaming} onSend={handleSendMessage} onStop={handleStopMessage} selectedModel={selectedModel} />
