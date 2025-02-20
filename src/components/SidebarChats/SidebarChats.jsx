@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 
 import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 import searchUrl from "./search.svg";
+import dotsUrl from "./dots.svg";
 import { navigate } from "vike/client/router";
 import { useConversations } from "../ConversationsProvider/ConversationsProvider";
 import { getConversationId } from "../../hooks/useConversation";
 
 const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
 
-  const [conversationId, setConversationId] = useState(getConversationId()); // Initialize correctly
+  const [conversationId, setConversationId] = useState(getConversationId());
 
   useEffect(() => {
     const updateConversationId = () => {
@@ -21,17 +22,15 @@ const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
       }
     };
 
-    // Create an observer for changes in history state
     const observer = new MutationObserver(updateConversationId);
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Handle manual navigation (e.g., clicking links or using `navigate()`)
     const handleHistoryChange = () => {
       updateConversationId();
     };
 
     window.addEventListener("popstate", handleHistoryChange);
-    window.addEventListener("pushstate", handleHistoryChange); // Custom event for pushState
+    window.addEventListener("pushstate", handleHistoryChange);
 
     return () => {
       observer.disconnect();
@@ -74,7 +73,12 @@ const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
         {conversations.length > 0 && (
           conversations.map((chat) => (
             <div key={chat.conversationId} className={`conversation ${conversationId === chat.conversationId ? "conversation-selected" : ""}`} onClick={() => navigateToConversation(chat.conversationId)}>
-              {chat.title || "Untitled Chat"}
+              <div className="conversation-text">{chat.title || "Untitled Chat"}</div>
+              <TooltipWrapper className="conversation-settings" info="Options" position="E" offset={8}>
+                <div className="conversation-settings-button" onClick={(event) => { event.stopPropagation(); console.log("hello"); }}>
+                  <img src={dotsUrl} draggable="false"/>
+                </div>
+              </TooltipWrapper>
             </div>
           ))
         )}

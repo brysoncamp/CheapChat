@@ -92,3 +92,17 @@
 .align-start {
     align-self: flex-start;
 }
+
+.conversation-settings {
+    /* background: linear-gradient(to right, rgba(246, 248, 250, 0) -20%, #f6f8fa 60%); */
+    min-width: 3rem;
+    align-self: flex-start;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    justify-content: flex-end;
+}

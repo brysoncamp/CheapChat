@@ -1,7 +1,7 @@
 .topbar {
     min-height: 4rem;
     position: sticky;
-    top: 0rem !important;
+    top: -0.125rem !important;
     width: 100%;
     background-color: #fff;
     z-index: 100;

@@ -60,8 +60,7 @@ const TooltipWrapper = ({ children, info, className, position = "S", offset = 8,
       className={`tooltip-wrapper ${className || ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ display: "inline-block", position: "relative" }}
-    >
+    >{/*style={{ display: "inline-block", position: "relative" }}*/}
       {children}
       {(showTooltip && enabled) && (
         <div className="tooltip" style={tooltipStyle}>

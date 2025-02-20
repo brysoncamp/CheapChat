@@ -1,39 +1,16 @@
-import { useState } from "react";
+import ChatOrPage from "../../components/ChatOrPage/ChatOrPage";
 
-import ChatInterface from "../../components/ChatInterface/ChatInterface";
-import useConversation from "../../hooks/useConversation";
-
-const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage }) => {
-
-  const { messages, setMessages, conversationId, isChatPage, isErrorPage } = useConversation();
-
-  /*
-  if (rootPage) {
-    return (
-      <ChatInterface selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} messages={messages} setMessages={setMessages} aiExplorer={true} />
-    );
-  }*/
- 
-
+const SearchPage = (props) => {
   return (
-    isChatPage ? (
-      <ChatInterface
-        key={conversationId}
-        selectedModel={selectedModel}
-        setSelectedModel={setSelectedModel}
-        lastNonSearchSelectedModel={lastNonSearchSelectedModel}
-        setLastNonSearchSelectedModel={setLastNonSearchSelectedModel}
-        messages={messages}
-        setMessages={setMessages}
-        windowConversationId={conversationId}
-      />
-    ) : (
-      <div>
-        <h1>Search</h1>
-      </div>
-    )
+    <ChatOrPage
+      {...props}
+      pageContent={
+        <div>
+          <h1>Search</h1>
+        </div>
+      }
+    />
   );
-    
 };
 
-export default Page;
+export default SearchPage;

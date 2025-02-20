@@ -1,13 +1,11 @@
-export { Page };
-
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useAuth } from '../../components/AuthProvider/AuthProvider';
-
+import ChatOrPage from "../../components/ChatOrPage/ChatOrPage";
 
 const stripePromise = loadStripe("pk_test_51Qn6p4RoO280mx7jwfqkc7gummGs3CyKz5DPUgDVvzgh0faWbQCd6xZszEMfZbw88OsvZnM7EUd5msyNSslt3xu4000T32JdeY");
 
-function Page() {
+const Page = (props) => {
   const [amount, setAmount] = useState(""); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -60,37 +58,40 @@ function Page() {
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>Buy CheapChat Credits</h1>
-      <p>Enter the amount (in USD) you want to purchase:</p>
-
-      <input
-        type="number"
-        placeholder="Enter amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        style={{ padding: "10px", margin: "10px", fontSize: "16px", width: "200px" }}
-      />
-
-      <br />
-
-      <button
-        onClick={handlePayment}
-        disabled={!amount || loading}
-        style={{
-          backgroundColor: loading ? "#ccc" : "#007bff",
-          color: "white",
-          padding: "10px 20px",
-          fontSize: "18px",
-          border: "none",
-          cursor: loading ? "not-allowed" : "pointer",
-          borderRadius: "5px"
-        }}
-      >
-        {loading ? "Processing..." : "Proceed to Payment"}
-      </button>
-
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-    </div>
+    <ChatOrPage
+      {...props}
+      pageContent={
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <h1>Buy CheapChat Credits</h1>
+          <p>Enter the amount (in USD) you want to purchase:</p>
+          <input
+            type="number"
+            placeholder="Enter amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            style={{ padding: "10px", margin: "10px", fontSize: "16px", width: "200px" }}
+          />
+          <br />
+          <button
+            onClick={handlePayment}
+            disabled={!amount || loading}
+            style={{
+              backgroundColor: loading ? "#ccc" : "#007bff",
+              color: "white",
+              padding: "10px 20px",
+              fontSize: "18px",
+              border: "none",
+              cursor: loading ? "not-allowed" : "pointer",
+              borderRadius: "5px"
+            }}
+          >
+            {loading ? "Processing..." : "Proceed to Payment"}
+          </button>
+          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+        </div>
+      }
+    />
   );
 }
+
+export default Page;

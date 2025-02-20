@@ -52,6 +52,7 @@
     align-items: center;
     white-space: nowrap;
     overflow: hidden;
+    position: relative;
 }
 
 .conversation:hover {
@@ -68,4 +69,52 @@
 
 .conversation-selected {
     background-color: #f6f8fa;
+}
+
+.conversation-settings-button {
+    background: linear-gradient(to right, rgba(246, 248, 250, 0) -20%, #fff 60%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 3rem;
+    /* background: linear-gradient(to right, rgba(246, 248, 250, 0) -20%, #f6f8fa 60%); */
+    /*
+    width: 3rem;
+    align-self: flex-start;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;*/
+}
+
+.conversation-selected .conversation-settings-button {
+    background: linear-gradient(to right, rgba(246, 248, 250, 0) -20%, #f6f8fa 60%);
+}
+
+.conversation:hover .conversation-settings-button {
+    background: linear-gradient(to right, rgba(246, 248, 250, 0) -20%, #f6f8fa 60%);
+}
+
+.conversation img {
+    height: 1.25rem;
+    margin-right: 0.375rem;
+    display: none;
+    transition: filter 0.15s ease-in-out;
+    filter: brightness(0) saturate(100%) invert(70%) sepia(0%) saturate(1%) hue-rotate(173deg) brightness(99%) contrast(100%);
+}
+
+.conversation:hover img {
+    display: block;
+}
+
+.conversation-settings-button:hover img {
+    filter: none;
+}
+
+.conversation-text {
+    overflow: hidden;
 }
