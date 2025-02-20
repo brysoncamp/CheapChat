@@ -2,7 +2,7 @@ import ChatInterface from "../../components/ChatInterface/ChatInterface";
 import useConversation from "../../hooks/useConversation";
 
 const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, rootPage = false }) => {
-  const { messages, setMessages, conversationId, isChatPage, isErrorPage } = useConversation();
+  const { messages, setMessages, conversationId, isChatPage, isErrorPage, title } = useConversation();
 
   console.log("Rendering page on the /error/ route");
   console.log("Root Page", rootPage);
@@ -16,6 +16,7 @@ const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, set
         messages={messages}
         setMessages={setMessages}
         aiExplorer={true}
+        title={title}
       />
     );
   }
@@ -32,6 +33,7 @@ const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, set
           messages={messages}
           setMessages={setMessages}
           windowConversationId={conversationId}
+          title={title}
         />
       )}
       {isErrorPage && <div>404</div>}

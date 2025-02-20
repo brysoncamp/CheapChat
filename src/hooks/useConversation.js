@@ -11,6 +11,7 @@ export const getConversationId = () => {
 
 const useConversation = () => {
   const [messages, setMessages] = useState([]);
+  const [title, setTitle] = useState(null);
   const [conversationId, setConversationId] = useState(null);
   const [isChatPage, setIsChatPage] = useState(false);
   const [isErrorPage, setIsErrorPage] = useState(false);
@@ -64,6 +65,10 @@ const useConversation = () => {
           messagesArray.push({ sender: msg.model, text: msg.response });
         });
 
+        setTitle(data.title);
+        document.title = data.title;
+        console.log("TITLE", data.title);
+
         setMessages(messagesArray);
       } catch (error) {
         console.error("Error fetching conversation:", error);
@@ -74,7 +79,7 @@ const useConversation = () => {
     fetchData();
   }, [conversationId]);
 
-  return { messages, setMessages, conversationId, isChatPage, isErrorPage };
+  return { messages, setMessages, conversationId, isChatPage, isErrorPage, title };
 };
 
 export default useConversation;

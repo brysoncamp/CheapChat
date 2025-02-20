@@ -27,5 +27,5 @@ const onRenderClient = (pageContext) => {
     root.render(page);
   }
 
-  document.title = pageContext.data?.title || pageContext.config?.title || "CheapChat - Any AI, No Subscriptions";
+  document.title = pageContext.data?.title || pageContext.config?.title || "CheapChat";
 };

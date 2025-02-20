@@ -2,7 +2,7 @@ import ChatInterface from "../ChatInterface/ChatInterface";
 import useConversation from "../../hooks/useConversation";
 
 const ChatOrPage = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, pageContent }) => {
-  const { messages, setMessages, conversationId, isChatPage } = useConversation();
+  const { messages, setMessages, conversationId, isChatPage, title } = useConversation();
 
   return isChatPage ? (
     <ChatInterface
@@ -14,6 +14,7 @@ const ChatOrPage = ({ selectedModel, setSelectedModel, lastNonSearchSelectedMode
       messages={messages}
       setMessages={setMessages}
       windowConversationId={conversationId}
+      title={title}
     />
   ) : (
     pageContent

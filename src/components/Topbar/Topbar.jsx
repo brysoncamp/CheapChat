@@ -5,14 +5,14 @@ import ConversationName from "../ConversationName/ConversationName";
 
 import { useAuth } from "../AuthProvider/AuthProvider";
 
-const Topbar = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, conversationName }) => { 
+const Topbar = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, conversationName, setConversationName }) => { 
 
   const { user, hasSignedInBefore, isAuthLoading } = useAuth();
 
   return (
     <div className="topbar">
       <ModelSelector selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel}/>
-      <ConversationName conversationName={conversationName} />
+      <ConversationName conversationName={conversationName} setConversationName={setConversationName}/>
       {(!user && !isAuthLoading) ? <SignUpButton signUp={!hasSignedInBefore} /> : <div>EXAMPLE</div>}
     </div>
   )

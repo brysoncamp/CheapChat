@@ -1,1 +1,1 @@
-export default "My Account - CheapChat";
+export default "Settings - CheapChat";

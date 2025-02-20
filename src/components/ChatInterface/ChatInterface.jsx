@@ -10,12 +10,18 @@ import { useState, useRef, useEffect } from "react";
 
 import { useAuth } from "../AuthProvider/AuthProvider";
 
-const ChatInterface = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, messages, setMessages, aiExplorer = false, windowConversationId = null }) => {
+const ChatInterface = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, messages, setMessages, aiExplorer = false, windowConversationId = null, title }) => {
   const [inputValue, setInputValue] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [hasStreamed, setHasStreamed] = useState(false);
   const [conversationId, setConversationId] = useState(windowConversationId);
-  const [conversationName, setConversationName] = useState("");
+  const [conversationName, setConversationName] = useState(title);
+  console.log("setting conversationname", title);
+
+  useEffect(() => {
+    setConversationName(title);
+    console.log("setting conversationname", title);
+  }, [title]);
 
   const webSocketChatRef = useRef(null); // ✅ Create ref for WebSocketChat
   const bodyRef = useRef(null);
@@ -56,7 +62,7 @@ const ChatInterface = ({ selectedModel, setSelectedModel, lastNonSearchSelectedM
   return (
     <div className="page">
       <div className="body" ref={bodyRef}>
-        <Topbar selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} conversationName={conversationName}/>
+        <Topbar selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} conversationName={conversationName} setConversationName={setConversationName} />
         {aiExplorer && <AIExplorer hasStreamed={hasStreamed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel} /> }
         {(!aiExplorer && messages.length == 0) && <ChatLoading />}
         <WebSocketChat ref={webSocketChatRef} bodyRef={bodyRef} isStreaming={isStreaming} setIsStreaming={setIsStreaming} hasStreamed={hasStreamed} selectedModel={selectedModel} messages={messages} setMessages={setMessages} aiExplorer={aiExplorer} conversationId={conversationId} setConversationId={setConversationId} setConversationName={setConversationName} />

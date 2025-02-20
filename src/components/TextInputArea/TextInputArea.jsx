@@ -2,7 +2,15 @@ import { useEffect, forwardRef } from "react";
 import "./TextInputArea.css";
 import modelsData from "../../data/models.json";
 
-const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, ref) => { // ✅ Consistent name
+const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, ref) => {
+  // This useEffect hook will handle focusing the textarea the first time the component loads.
+  useEffect(() => {
+    const textArea = ref.current;
+    if (textArea) {
+      textArea.focus();  // Focus the textarea when the component mounts
+    }
+  }, [selectedModel]);  // Empty dependency array ensures this runs once when the component mounts
+
   useEffect(() => {
     const textArea = ref.current;
 
@@ -18,19 +26,16 @@ const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, re
     }
   }, [value]);
 
-  // ✅ Define handleKeyDown inside the component
+  // Handle the Enter key press to send the input
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault(); // Prevents new lines
-      onSend(); // ✅ Calls send action
+      onSend(); // Calls send action
     }
   };
 
   const selectedModelName = modelsData[selectedModel].displayName;
   const selectedModelCategory = modelsData[selectedModel].category[0];
-  //const selectedModelName = "";
-  //console.log(selectedModelName);
-  //console.log
 
   return (
     <textarea
@@ -40,7 +45,7 @@ const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, re
       placeholder={`${selectedModelCategory} with ${selectedModelName}`}
       value={value}
       onChange={onChange} // Updates the input state
-      onKeyDown={handleKeyDown} // ✅ Calls send only when Enter is pressed
+      onKeyDown={handleKeyDown} // Calls send only when Enter is pressed
     />
   );
 });

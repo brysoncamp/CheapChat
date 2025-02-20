@@ -51,10 +51,12 @@ const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
     setTimeout(() => resetContent(), 100);
   };
 
-  const navigateToConversation = (conversationId) => {
+  const navigateToConversation = (conversationId, title) => {
     console.log("Navigate to conversation", conversationId);
+    if (window.location.pathname === `/c/${conversationId}`) return;
     window.history.pushState({}, "", `/c/${conversationId}`);
     setRootPage(false);
+    document.title = title || "CheapChat";
     console.log("setting root page to false");
     setTimeout(() => resetContent(), 100);
   };
@@ -72,7 +74,7 @@ const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
       {!isClosed && <div className="conversations-container">
         {conversations.length > 0 && (
           conversations.map((chat) => (
-            <div key={chat.conversationId} className={`conversation ${conversationId === chat.conversationId ? "conversation-selected" : ""}`} onClick={() => navigateToConversation(chat.conversationId)}>
+            <div key={chat.conversationId} className={`conversation ${conversationId === chat.conversationId ? "conversation-selected" : ""}`} onClick={() => navigateToConversation(chat.conversationId, chat.title)}>
               <div className="conversation-text">{chat.title || "Untitled Chat"}</div>
               <TooltipWrapper className="conversation-settings" info="Options" position="E" offset={8}>
                 <div className="conversation-settings-button" onClick={(event) => { event.stopPropagation(); console.log("hello"); }}>

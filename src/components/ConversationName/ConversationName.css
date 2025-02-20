@@ -13,8 +13,17 @@
     color: #222;
     border: 2px solid #ffffff;
     transition: border 0.2s ease;
+    display: inline-block;
+    text-align: center;
+    max-width: 36rem;
+    cursor: pointer;
 }
 
 .conversation-name:hover {
     border: 2px solid #e4e4e4;
+}
+
+.conversation-name:focus {
+    border: 2px solid #e4e4e4;
+    cursor: text;
 }
