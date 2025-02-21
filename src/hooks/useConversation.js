@@ -62,7 +62,7 @@ const useConversation = () => {
 
         data.messages.forEach((msg) => {
           messagesArray.push({ sender: "user-message", text: msg.query });
-          messagesArray.push({ sender: msg.model, text: msg.response });
+          messagesArray.push({ sender: msg.model, text: msg.response, citations: msg.citations });
         });
 
         setTitle(data.title);

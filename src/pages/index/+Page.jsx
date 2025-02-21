@@ -37,7 +37,7 @@ const Page = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, set
           title={title}
         />
       )}
-      {isErrorPage && <div>404</div>}
+      {/*isErrorPage && <div>404</div>*/}
     </>
   );
 };

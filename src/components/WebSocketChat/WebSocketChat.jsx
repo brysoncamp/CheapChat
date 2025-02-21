@@ -6,7 +6,7 @@ import useScrollManager from "../../hooks/useScrollManager";
 
 const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming, hasStreamed, selectedModel, messages, setMessages, aiExplorer, conversationId, setConversationId, setConversationName }, ref) => {
   const [lastModel, setlastModel] = useState(null);
-  const { currentMessage, sendMessage, cancelMessage } = useWebSocket(setIsStreaming, selectedModel, setlastModel, setMessages, conversationId, setConversationId, setConversationName);
+  const { currentMessage, currentCitations, sendMessage, cancelMessage } = useWebSocket(setIsStreaming, selectedModel, setlastModel, setMessages, conversationId, setConversationId, setConversationName);
   useScrollManager(bodyRef, messages, currentMessage);
 
   useImperativeHandle(ref, () => ({
@@ -15,7 +15,7 @@ const WebSocketChat = forwardRef(({ bodyRef, isStreaming, setIsStreaming, hasStr
   }));
 
   return (
-    (hasStreamed || !aiExplorer) && <MessagesContainer messages={messages} currentMessage={currentMessage} isStreaming={isStreaming} lastModel={lastModel} />
+    (hasStreamed || !aiExplorer) && <MessagesContainer messages={messages} currentMessage={currentMessage} currentCitations={currentCitations} isStreaming={isStreaming} lastModel={lastModel} />
   );
 });
 

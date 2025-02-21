@@ -2,11 +2,13 @@ import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 import RenderMarkdown from "../RenderMarkdown/RenderMarkdown";
 import AIMessageOptions from "../AIMessageOptions/AIMessageOptions";
 import ProviderLogo from "../ProviderLogo/ProviderLogo";
+import CitationsContainer from "../CitationsContainer/CitationsContainer";
+
 import "./AIMessage.css";
 
 import modelsData from "../../data/models.json";
 
-const AIMessage = ({ message, model, isLoading = false }) => {
+const AIMessage = ({ message, citations, model, isLoading = false }) => {
 
   const modelName = modelsData[model]?.displayName;
   const provider = modelsData[model]?.provider;
@@ -19,7 +21,8 @@ const AIMessage = ({ message, model, isLoading = false }) => {
         </div>
       </TooltipWrapper>
       <div className="ai-message-container">
-        <RenderMarkdown text={message} isLoading={isLoading} />
+        <CitationsContainer citations={citations} />
+        <RenderMarkdown text={message} citations={citations} isLoading={isLoading} />
         { !isLoading && <AIMessageOptions text={message} /> }
       </div>
     </div>

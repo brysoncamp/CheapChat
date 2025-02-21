@@ -9,11 +9,13 @@ const MAX_RETRIES = 5;
 const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, conversationId, setConversationId, setConversationName) => {
   const [socket, setSocket] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [currentCitations, setCurrentCitations] = useState([]);
   const [sessionId, setSessionId] = useState(null);
   
   const messageQueue = useRef([]);
   const reconnectAttempts = useRef(0);
   const latestMessageRef = useRef("");
+  const latestCitationsRef = useRef([]);
   const lastModelRef = useRef(null);
   const latestSocketRef = useRef(null); // Tracks the latest WebSocket connection
 
@@ -59,6 +61,7 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
           console.log("📩 Message Received:", data);
 
           if (data.conversationId) {
+            console.log("REPLACING HISTORY STATE (CONVERSATION ID) IN USE WEB SOCKET");
             window.history.replaceState({}, "", `/c/${data.conversationId}`);
             setConversationId(data.conversationId);
           }
@@ -79,16 +82,26 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
             setConversationName(data.title);
           }
 
-          if (data.done || data.timeout || data.canceled) {
+          if (data.citations) {
+            setCurrentCitations(data.citations);
+            latestCitationsRef.current = data.citations;
+          }
+
+          if (data.done) { // if (data.done || data.timeout || data.canceled)
+            if (latestMessageRef.current.trim() === "") return;
+
             setTimeout(() => {
               console.log("setting ai-message", latestMessageRef.current);
               setIsStreaming(false);
               const finalMessage = latestMessageRef.current.trim();
+
               if (finalMessage) {
-                setMessages((prev) => [...prev, { sender: lastModelRef.current, text: finalMessage }]);
+                setMessages((prev) => [...prev, { sender: lastModelRef.current, text: finalMessage, citations: latestCitationsRef.current}]); // if (citations )
               }
               setCurrentMessage("");
+              setCurrentCitations([]);
               latestMessageRef.current = ""; // Reset AFTER setting state
+              latestCitationsRef.current = [];
             }, 100);
           }
           
@@ -125,15 +138,15 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
   };
 
   const sendMessage = (message) => {
+    console.log("WE ARE SENDING A MESSAGE");
     if (message.trim()) {
       const modelName = modelsData[selectedModel].modelName;
       lastModelRef.current = selectedModel;
       setLastModel(selectedModel);
-      //const userId = user.userId;
+
       const payload = { action: modelName, message, sessionId, conversationId };
       console.log("sending message", payload);
-      //console.log("sending user-id with message", userId);
-      //console.log("sending based on user", user);
+
       setMessages((prev) => [...prev, { sender: "user-message", text: message }]);
 
       if (socket && socket === latestSocketRef.current && socket.readyState === WebSocket.OPEN) {
@@ -162,7 +175,7 @@ const useWebSocket = (setIsStreaming, selectedModel, setLastModel, setMessages, 
     };
   }, []);
 
-  return { currentMessage, sendMessage, cancelMessage };
+  return { currentMessage, currentCitations, sendMessage, cancelMessage };
 };
 
 export default useWebSocket;

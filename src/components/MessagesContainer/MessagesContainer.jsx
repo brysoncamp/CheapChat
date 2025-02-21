@@ -2,7 +2,7 @@ import UserMessage from "../UserMessage/UserMessage";
 import AIMessage from "../AIMessage/AIMessage";
 import "./MessagesContainer.css";
 
-const MessagesContainer = ({ messages, currentMessage, isStreaming, lastModel }) => {
+const MessagesContainer = ({ messages, currentMessage, currentCitations, isStreaming, lastModel }) => {
 
   //console.log("MessagesContainer messages:", messages);
   
@@ -16,7 +16,7 @@ const MessagesContainer = ({ messages, currentMessage, isStreaming, lastModel })
               {msg.sender === "user-message" ? (
                 <UserMessage message={msg.text} />
               ) : (
-                <AIMessage message={msg.text} model={msg.sender} />
+                <AIMessage message={msg.text} citations={msg.citations} model={msg.sender} />
               )}
             </div>
           </div>
@@ -25,7 +25,7 @@ const MessagesContainer = ({ messages, currentMessage, isStreaming, lastModel })
       {(currentMessage || isStreaming) && (
         <div className="message-container">
           <div className="message-container-inner">
-            <AIMessage message={currentMessage} model={lastModel} isLoading={true} />
+            <AIMessage message={currentMessage} citations={currentCitations} model={lastModel} isLoading={true} />
           </div>
         </div>
       )}

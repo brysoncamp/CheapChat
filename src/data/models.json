@@ -21,28 +21,6 @@
     },
     "provider": "OpenAI"
   },
-  "o1": {
-    "category": ["Reason"],
-    "description": "Advanced reasoning model for in-depth analysis.",
-    "displayName": "OpenAI o1",
-    "modelName": "o1",
-    "pricing": {
-      "input": "$30.00 / 1M input tokens",
-      "output": "$120.00 / 1M output tokens"
-    },
-    "provider": "OpenAI"
-  },
-  "o1-mini": {
-    "category": ["Reason"],
-    "description": "Efficient reasoning model for smart problem-solving.",
-    "displayName": "OpenAI o1-mini",
-    "modelName": "o1-mini",
-    "pricing": {
-      "input": "$2.20 / 1M input tokens",
-      "output": "$8.80 / 1M output tokens"
-    },
-    "provider": "OpenAI"
-  },
   "o3-mini": {
     "category": ["Reason"],
     "description": "Streamlined reasoning model for rapid analysis.",

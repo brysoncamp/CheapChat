@@ -5,7 +5,7 @@ import SidebarModels from "../SidebarModels/SidebarModels";
 import LogoContainer from "../LogoContainer/LogoContainer";
 import SidebarChats from "../SidebarChats/SidebarChats";
 import billingUrl from "./billing.svg";
-import settingsUrl from "./settings2.svg";
+import settingsUrl from "./settings.svg";
 import { navigate } from "vike/client/router";
 
 import "./Sidebar.css";
@@ -19,17 +19,17 @@ const Sidebar = ({ selectedModel, setSelectedModel, resetContent, setRootPage })
     }
     setRootPage(false);
     navigate(`/${page}`);
-    setTimeout(() => resetContent(), 100);
+    setTimeout(() => resetContent(), 0);
   };
 
   return (
     <>
       <div className={`sidebar ${isClosed ? 'sidebar-closed' : ''}`}>
-        <LogoContainer isClosed={isClosed} resetContent={resetContent} />
+        <LogoContainer isClosed={isClosed} resetContent={resetContent} setRootPage={setRootPage} />
       
         <div className={`sidebar-scroll-container ${isClosed ? 'sidebar-scroll-container-closed' : ''}`}>
           <SidebarModels isClosed={isClosed} selectedModel={selectedModel} setSelectedModel={setSelectedModel} resetContent={resetContent} setRootPage={setRootPage}/>
-          <SidebarChats isClosed={isClosed} resetContent={resetContent} setRootPage={setRootPage}/>
+          <SidebarChats isClosed={isClosed} resetContent={resetContent} setRootPage={setRootPage} />
         </div>
         <div className="sidebar-bottom-buttons-container">
           <TooltipWrapper info="Billing" position="E" offset={10} enabled={isClosed}>

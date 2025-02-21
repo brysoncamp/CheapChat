@@ -1,0 +1,26 @@
+.citations-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.citation {
+    background-color: #f6f8fa;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.citation:hover {
+    background-color: #eee;
+}
+
+.citation-number {
+    font-size: 0.75rem;
+    margin-right: 0.375rem;
+    color: #444;
+}

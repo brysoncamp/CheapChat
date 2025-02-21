@@ -29,7 +29,7 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
     }
     navigate("/");
     setRootPage(true);
-    setTimeout(() => resetContent(), 100);
+    setTimeout(() => resetContent(), 0);
   };
 
   const newModel = (model) => {

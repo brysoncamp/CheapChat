@@ -1,11 +1,17 @@
 import "./LogoContainer.css";
 import logoUrl from "/logo.svg";
+import { navigate } from "vike/client/router";
 
-const LogoContainer = ({ isClosed, resetContent }) => {
+const LogoContainer = ({ isClosed, resetContent, setRootPage }) => {
 
-  const navigateToRoot = (event) => {
-    event.preventDefault();
-    resetContent();
+  const navigateToRoot = () => {
+    if (window.location.pathname !== "/") {
+      window.history.pushState({}, "", "/");
+    }
+    navigate("/");
+    setRootPage(true);
+    setTimeout(() => resetContent(), 0);
+    console.log("navigating to root");
   };
 
   return (
