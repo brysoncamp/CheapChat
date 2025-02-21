@@ -1,0 +1,1 @@
+.citations-container{display:flex;flex-wrap:wrap;gap:.5rem .75rem;margin-top:.75rem}.citation{background-color:#f6f8fa;display:flex;flex-wrap:nowrap;padding:.125rem .5rem;border-radius:.375rem;cursor:pointer;transition:background-color .15s ease-in-out}.citation:hover{background-color:#eee}.citation-number{font-size:.75rem;margin-right:.375rem;color:#444}
