@@ -123,5 +123,16 @@
       "search": "$10.00 / 1K searches"
     },
     "provider": "Perplexity"
+  },
+  "r1-1776": {
+    "category": ["Reason"],
+    "description": "Modified DeepSeek-R1 model for reduced censorship.",
+    "displayName": "R1 1776",
+    "modelName": "r1-1776",
+    "pricing": {
+      "input": "$4.00 / 1M input tokens",
+      "output": "$16.00 / 1M output tokens"
+    },
+    "provider": "Perplexity"
   }
 }

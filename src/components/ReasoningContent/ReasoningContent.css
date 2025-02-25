@@ -1,0 +1,56 @@
+.reasoning-content-container {
+    display: flex;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.reasoning-line {
+    min-width: 0.125rem;
+    max-width: 0.125rem;
+    width: 0.5rem;
+    background-color: #ddd;
+    border-radius: 1rem;
+    margin-right: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.reasoning-content {
+    color: #555;
+}
+
+.reasoning-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.reasoning-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 0.875rem;
+    color: #555;
+    transition: color 0.3s ease-in-out;
+}
+
+.reasoning-button-open p {
+    color: black;
+}
+
+.reasoning-button img {
+    height: 1.25rem;
+    margin-left: 0.25rem;
+    filter: brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(1595%) hue-rotate(179deg) brightness(78%) contrast(75%);
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.reasoning-button-open img {
+    filter: none;
+    transform: rotate(180deg);
+}
+
+.reasoning-button p {
+    margin: 0;
+}
