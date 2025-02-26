@@ -5,7 +5,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css"; // Import KaTeX styles
 import CodeBlock from "../CodeBlock/CodeBlock";
-import { visit, SKIP } from "unist-util-visit";
+import { visit } from "unist-util-visit";
 import "./RenderMarkdown.css";
 
 import ReasoningContent from "../ReasoningContent/ReasoningContent";

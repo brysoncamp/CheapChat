@@ -11,10 +11,18 @@
 
 }
 
+body.mobile .sidebar {
+    width: 90vw;
+}
+
 .sidebar-scroll-container {
     overflow-y: overlay;
     width: 14rem;
     flex: 1;
+}
+
+body.mobile .sidebar-scroll-container {
+    width: calc(90vw - 1rem);
 }
 
 .sidebar-scroll-container-closed {
@@ -44,6 +52,10 @@
 
 
 .sidebar-closed {
+    width: 5rem;
+}
+
+body.mobile .sidebar-closed {
     width: 5rem;
 }
 

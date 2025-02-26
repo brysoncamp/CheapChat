@@ -82,3 +82,41 @@ td {
     background-color: #f6f8fa;
     border-radius: 0.5rem;
 }
+
+
+/* ReasoningContent */
+
+
+
+/*
+
+console.log("HTML Height:", document.documentElement.scrollHeight);
+console.log("Window Height:", window.innerHeight);
+console.log("Body Height:", document.body.scrollHeight);
+
+
+*/
+
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/*
+html, body, #react-root, .flex, .page-container, .page, .body {
+    overflow-x: scroll !important;
+}
+*/
+
+/*
+html, body {
+    height: 100vh;
+    max-height: 100vh; 
+    width: 100vw;
+    max-width: 100vw;   
+    overflow: hidden;  
+}*/
+
+html {
+    height: -webkit-fill-available;
+}

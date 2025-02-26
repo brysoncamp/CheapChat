@@ -1,6 +1,6 @@
 export { Layout };
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { AuthProvider } from "../AuthProvider/AuthProvider";
 import Flex from "../Flex/Flex";
@@ -11,7 +11,15 @@ import { ConversationsProvider } from "../ConversationsProvider/ConversationsPro
 
 import "../../styles/global.css";
 
+import { isMobile } from "react-device-detect";
+
 const Layout = ({ children }) => {
+  
+  useEffect(() => {
+    //document.documentElement.style.setProperty("--is-mobile", isMobile ? "1" : "0");
+    document.body.classList.toggle("mobile", isMobile);
+  }, []);
+
   const [selectedModel, setSelectedModel] = useState("gpt-4o-mini");
   const [lastNonSearchSelectedModel, setLastNonSearchSelectedModel] = useState("gpt-4o-mini");
   const [contentKey, setContentKey] = useState(0);

@@ -1,12 +1,27 @@
 import { useState, useRef, useEffect } from "react";
 import "./TooltipWrapper.css";
+import { isMobile } from "react-device-detect";
+
 
 const TooltipWrapper = ({ children, info, className, position = "S", offset = 8, enabled = true }) => {
+  
+  if (isMobile) {
+    return (
+      <div className={`tooltip-wrapper ${className || ""}`}>
+        {children}
+      </div>
+    );
+  }
+
+  //return children;
+  
   const [isHovered, setIsHovered] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipStyle, setTooltipStyle] = useState({});
   const wrapperRef = useRef(null);
   const timeoutRef = useRef(null);
+
+
 
   useEffect(() => {
     const calculateTooltipPosition = (rect) => {

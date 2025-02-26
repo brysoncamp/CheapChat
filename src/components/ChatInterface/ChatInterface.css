@@ -6,6 +6,12 @@
     width: 100%;
 }
 
+/*
+body.mobile .page {
+    background-color: red;
+    width: calc(100% + 10rem);
+}*/
+
 .body {
     flex: 1;
     max-height: calc(100% - 6rem);
@@ -19,6 +25,10 @@
     overflow-y: overlay;
     display: flex;
     flex-direction: column;
+}
+
+body.mobile .body {
+   width: 100vw;
 }
 
 .topbar {
