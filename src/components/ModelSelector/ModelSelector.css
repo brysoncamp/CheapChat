@@ -12,27 +12,17 @@
     color: #333;
     background-color: #f6f8fa;
     margin-left: 0;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.mobile .model-selector {
+    margin-left: 0.75rem;
 }
 
 .model-selector:hover {
     background-color: #edeeee;
 }
-
-/*
-
-.model-icon {
-    margin-right: 0.25rem;
-}
-
-.openai-icon {
-    height: 1.675rem;
-}
-
-.perplexity-icon {
-    height: 1.25rem;
-    margin-right: 0.5rem;
-    margin-left: 0.25rem;
-}*/
 
 .selector-icon {
     height: 1.125rem;
@@ -74,7 +64,7 @@
     border: 1px solid #ddd;
     position: absolute;
     top: 4rem;
-    max-height: 60vh;
+    max-height: 60%; /* 60vh */
     border-radius: 1.25rem;
     display: none;
     overflow-y: auto;

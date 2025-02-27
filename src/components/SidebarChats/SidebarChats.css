@@ -1,6 +1,11 @@
 .sidebar-chats {
     padding: 0.5rem 0.75rem;
-} 
+    flex: 1;
+}
+
+.sidebar-chats-closed {
+    max-width: 3.875rem;
+}
 
 .search-button {
     align-self: flex-start;
@@ -65,6 +70,10 @@
     top: 0;
     z-index: 100;
     padding-bottom: 0.25rem;
+}
+
+.search-button-background-closed {
+    max-width: 2.5rem;
 }
 
 .conversation-selected {

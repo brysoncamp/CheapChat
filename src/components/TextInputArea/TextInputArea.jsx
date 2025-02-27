@@ -2,6 +2,8 @@ import { useEffect, forwardRef } from "react";
 import "./TextInputArea.css";
 import modelsData from "../../data/models.json";
 
+import { isMobile } from "react-device-detect";
+
 const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, ref) => {
   // This useEffect hook will handle focusing the textarea the first time the component loads.
   useEffect(() => {
@@ -37,6 +39,13 @@ const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, re
   const selectedModelName = modelsData[selectedModel].displayName;
   const selectedModelCategory = modelsData[selectedModel].category[0];
 
+  const handleFocus = (event) => {
+    // scroll all the way to the right
+    // scroll documnet body to the right
+    document.documentElement.scrollLeft = document.documentElement.scrollWidth;
+    //document.body.scrollLeft = document.body.scrollWidth;
+  };
+
   return (
     <textarea
       ref={ref}
@@ -46,6 +55,7 @@ const TextInputArea = forwardRef(({ value, onChange, onSend, selectedModel }, re
       value={value}
       onChange={onChange} // Updates the input state
       onKeyDown={handleKeyDown} // Calls send only when Enter is pressed
+      onFocus={handleFocus}
     />
   );
 });

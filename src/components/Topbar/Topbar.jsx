@@ -5,6 +5,8 @@ import ConversationName from "../ConversationName/ConversationName";
 
 import { useAuth } from "../AuthProvider/AuthProvider";
 
+import { isMobile } from "react-device-detect";
+
 const Topbar = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, setLastNonSearchSelectedModel, conversationName, setConversationName }) => { 
 
   const { user, hasSignedInBefore, isAuthLoading } = useAuth();
@@ -12,8 +14,8 @@ const Topbar = ({ selectedModel, setSelectedModel, lastNonSearchSelectedModel, s
   return (
     <div className="topbar">
       <ModelSelector selectedModel={selectedModel} setSelectedModel={setSelectedModel} lastNonSearchSelectedModel={lastNonSearchSelectedModel} setLastNonSearchSelectedModel={setLastNonSearchSelectedModel}/>
-      <ConversationName conversationName={conversationName} setConversationName={setConversationName}/>
-      {(!user && !isAuthLoading) ? <SignUpButton signUp={!hasSignedInBefore} /> : <div>EXAMPLE</div>}
+      {!isMobile && <ConversationName conversationName={conversationName} setConversationName={setConversationName}/>}
+      {(!user && !isAuthLoading) ? <SignUpButton signUp={!hasSignedInBefore} /> : <div></div>}
     </div>
   )
 }

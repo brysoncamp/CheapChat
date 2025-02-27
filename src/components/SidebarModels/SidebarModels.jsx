@@ -61,8 +61,8 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
   };
 
   return (    
-    <div className="sidebar-models">
-      <div className="new-chat-button-background">
+    <div className={`sidebar-models ${isClosed ? "sidebar-models-closed" : ""}`}>
+      <div className={`new-chat-button-background ${isClosed ? "new-chat-button-background-closed" : ""}`} onClick={navigateToRoot}>
         <TooltipWrapper className="align-start" info="New chat" position="E" offset={12} enabled={isClosed}>
           <div className="new-chat-button unselectable" onClick={navigateToRoot}>
             <img src={plusUrl} draggable="false"/>

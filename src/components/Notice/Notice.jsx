@@ -1,8 +1,14 @@
 import "./Notice.css";
 
+// import ismobile from import
+import { isMobile } from "react-device-detect";
+
 const Notice = ({ inputValue }) => {
+    console.log("isMobile", isMobile);
+
+
     return (
-        <div className={inputValue.trim() ? "notice" : "notice disclaimer"}>
+        !isMobile && <div className={inputValue.trim() ? "notice" : "notice disclaimer"}>
             {inputValue.trim() ? (
                 "Use Shift+Enter to start a new line."
             ) : (

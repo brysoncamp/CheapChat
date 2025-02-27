@@ -62,8 +62,8 @@ const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
   };
  
   return (
-    <div className="sidebar-chats">
-      <div className="search-button-background">
+    <div className={`sidebar-chats ${isClosed ? "sidebar-chats-closed" : ""}`}>
+      <div className={`search-button-background ${isClosed ? "search-button-background-closed" : ""}`} onClick={navigateToSearch}>
         <TooltipWrapper className="align-start" info="Search chats" position="E" offset={12} enabled={isClosed}>
           <div className="search-button unselectable" onClick={navigateToSearch}>
             <img src={searchUrl} draggable="false"/>

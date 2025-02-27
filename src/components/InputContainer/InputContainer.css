@@ -2,7 +2,6 @@
     border-radius: 1.5rem;
     background-color: #f6f8fa;
     width: 100%;
-    margin-bottom: 3rem;
     transition: background-color 0.2s ease-in-out;
     display: flex;
     align-items: flex-end;
@@ -10,7 +9,6 @@
     overflow: hidden;
     min-height: 4rem;
     max-height: 22rem;
-    
     width: 90%;
     max-width: 50rem;
 }

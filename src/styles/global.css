@@ -29,31 +29,23 @@ button {
     border: none;
 }
 
-
 .unselectable {
-    user-select: none;      /* Prevent text selection */
+    user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
-  
-    pointer-events: auto;   /* Ensure buttons remain clickable */
-    -webkit-touch-callout: none; /* Disable context menu on iOS */
+    pointer-events: auto;
+    -webkit-touch-callout: none;
 }
   
-
 .sharp-svg {
-    will-change: transform; /* ✅ Forces browser re-render */
-    transform: translateZ(0); /* ✅ Prevents Chrome SVG distortions */
-    image-rendering: crisp-edges; /* ✅ Ensures clear image rendering */
+    will-change: transform;
+    transform: translateZ(0);
+    image-rendering: crisp-edges;
 }
 
 .align-start {
     align-self: flex-start;
 }
-
-
-
-
-/* markdown */
 
 p a {
     background-color: #f6f8fa;
@@ -83,40 +75,29 @@ td {
     border-radius: 0.5rem;
 }
 
-
-/* ReasoningContent */
-
-
-
-/*
-
-console.log("HTML Height:", document.documentElement.scrollHeight);
-console.log("Window Height:", window.innerHeight);
-console.log("Body Height:", document.body.scrollHeight);
-
-
-*/
-
-
 * {
     -webkit-tap-highlight-color: transparent;
 }
 
-/*
-html, body, #react-root, .flex, .page-container, .page, .body {
-    overflow-x: scroll !important;
+html, body, #react-root {
+    min-height: 100% !important;  /* Ensures it’s not collapsing */
+    max-height: 100% !important; 
 }
-*/
 
-/*
+body {
+    overflow-y: hidden;
+}
+
+#react-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 html, body {
-    height: 100vh;
-    max-height: 100vh; 
-    width: 100vw;
-    max-width: 100vw;   
-    overflow: hidden;  
-}*/
-
-html {
-    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
+
+

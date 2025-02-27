@@ -23,10 +23,9 @@
     overflow: hidden;
 }
 
-/*
-.sidebar-model-closed {
-    width: 2
-}*/
+.sidebar-models-closed {
+    max-width: 3.875rem;
+}
 
 .sidebar-model-selected {
     background-color: #f6f8fa;
@@ -69,6 +68,10 @@
     transition: background-color 0.15s ease-in-out;
     flex-shrink: 0;
     margin-left: auto;
+}
+
+.new-chat-button-background-closed {
+    width: 2.5rem;
 }
 
 .new-chat-button:hover {
