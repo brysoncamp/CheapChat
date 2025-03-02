@@ -4,12 +4,9 @@ import "./MessagesContainer.css";
 
 const MessagesContainer = ({ messages, currentMessage, currentCitations, isStreaming, lastModel }) => {
 
-  //console.log("MessagesContainer messages:", messages);
-  
   return (
     <div className="messages-container">
       {messages.map((msg, i) => {
-        //console.log("Message sender:", msg.sender);
         return (
           <div className="message-container" key={i}>
             <div className="message-container-inner">

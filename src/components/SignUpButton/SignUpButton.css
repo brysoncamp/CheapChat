@@ -9,6 +9,14 @@
     margin-right: 0rem;
     font-size: 1.125rem;
     display: flex;
+    flex-wrap: nowrap;
+    /* wrap text no wrap; */
+    text-wrap: nowrap;
+}
+
+.mobile .signup-button {
+    padding: 0.375rem 0.5rem 0.375rem 1rem;
+    margin-right: 0.25rem;
 }
 
 .signup-button:hover {
@@ -17,4 +25,8 @@
 
 .signup-button img {
     height: 1.25rem;
+}
+
+.mobile .signup-button img {
+    height: 1.125rem;
 }

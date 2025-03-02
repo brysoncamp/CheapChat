@@ -89,6 +89,15 @@
     height: 2.25rem;
 }
 
+.mobile .ai-name-tooltip {
+    margin: 0;
+    margin-left: -0.25rem;
+    margin-bottom: -0.75rem;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+}
+
 .align-start {
     align-self: flex-start;
 }

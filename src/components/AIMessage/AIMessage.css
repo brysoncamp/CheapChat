@@ -19,3 +19,14 @@
 .ai-message-wrapper {
     display: flex;
 }
+
+.mobile .ai-message-wrapper {
+    flex-direction: column;
+}
+
+.ai-message-model-name {
+    text-wrap: nowrap;
+    margin-left: 0.5rem;
+    font-weight: 500;
+    color: #111;
+}

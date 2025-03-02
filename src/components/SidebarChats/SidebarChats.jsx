@@ -8,6 +8,8 @@ import dotsUrl from "./dots.svg";
 import { navigate } from "vike/client/router";
 import { useConversations } from "../ConversationsProvider/ConversationsProvider";
 import { getConversationId } from "../../hooks/useConversation";
+import { isMobile } from "react-device-detect";
+
 
 const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
 
@@ -49,16 +51,23 @@ const SidebarChats = ({ isClosed, resetContent, setRootPage }) => {
     setRootPage(false);
     navigate("/search");
     setTimeout(() => resetContent(), 100);
+    //if (isMobile) document.documentElement.scrollLeft = document.documentElement.scrollWidth;
   };
 
   const navigateToConversation = (conversationId, title) => {
     console.log("Navigate to conversation", conversationId);
+    if (isMobile) {
+      setTimeout(() => {
+        document.documentElement.scrollLeft = document.documentElement.scrollWidth;
+      }, 100);
+    }
+    console.log(isMobile);
     if (window.location.pathname === `/c/${conversationId}`) return;
     window.history.pushState({}, "", `/c/${conversationId}`);
     setRootPage(false);
     document.title = title || "CheapChat";
     console.log("setting root page to false");
-    setTimeout(() => resetContent(), 100);
+    setTimeout(() => resetContent(), 50);
   };
  
   return (

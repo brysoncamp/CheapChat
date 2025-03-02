@@ -6,6 +6,10 @@
     max-width: 70%;
 }
 
+.mobile .user-message-container {
+    max-width: 95%;
+}
+
 .user-message {
     background-color: #f6f8fa;
     padding: 0.75rem;

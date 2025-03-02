@@ -6,6 +6,7 @@ import TooltipWrapper from "../TooltipWrapper/TooltipWrapper";
 import plusUrl from "./plus.svg";
 import moreUrl from "./more.svg";
 import { navigate } from "vike/client/router";
+import { isMobile } from "react-device-detect";
 
 const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent, setRootPage }) => {
   const [modelsCount, setModelsCount] = useState(5);
@@ -29,7 +30,8 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
     }
     navigate("/");
     setRootPage(true);
-    setTimeout(() => resetContent(), 0);
+    setTimeout(() => resetContent(), 25);
+    if (isMobile) setTimeout(() => document.documentElement.scrollLeft = document.documentElement.scrollWidth, 100);
   };
 
   const newModel = (model) => {
@@ -46,6 +48,8 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
       newModel(model);
       console.log("should nav to root");
     }
+
+    //if (isMobile) setTimeout(() => document.documentElement.scrollLeft = document.documentElement.scrollWidth, 0);
   };
 
   const addMoreModelsWithDelay = () => {
@@ -54,7 +58,7 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
     newModels.forEach((model, index) => {
       setTimeout(() => {
         setDisplayedModels((prev) => [...prev, model]);
-      }, index * 50); // 100ms delay between each model appearing
+      }, index * 50); // 50ms delay between each model appearing
     });
 
     setModelsCount((prev) => prev + newModels.length);
@@ -76,7 +80,7 @@ const SidebarModels = ({ isClosed, selectedModel, setSelectedModel, resetContent
             <ProviderLogo provider={modelsData[model].provider} className="sidebar-logos" />
             <p className="sidebar-model-names">{!isClosed ? modelsData[model].displayName : ""}</p>
             
-            {!isClosed && 
+            {(!isClosed && (!isMobile || selectedModel === model)) && 
               <TooltipWrapper info="New chat" position="E" offset={16}>
                 <div className="new-chat-model-button" onClick={() => newModel(model)}>
                   <img src={plusUrl} draggable="false"/>

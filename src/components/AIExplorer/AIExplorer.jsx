@@ -72,14 +72,14 @@ const AIExplorer = ({ hasStreamed, selectedModel, setSelectedModel, setLastNonSe
             ))}
           </div>
         </div>
-        <div className="ai-information-container">
-          <h2 className={`ai-information-name ${isFading ? "fade-out" : "fade-in"}`}>
-            {modelsData[delayedModel]?.displayName}
-          </h2>
-          <p className={`ai-information-description ${isFading ? "fade-out" : "fade-in"}`}>
-            {modelsData[delayedModel]?.description}
-          </p>
-        </div>
+      </div>
+      <div className="ai-information-container">
+        <h2 className={`ai-information-name ${isFading ? "fade-out" : "fade-in"}`}>
+          {modelsData[delayedModel]?.displayName}
+        </h2>
+        <p className={`ai-information-description ${isFading ? "fade-out" : "fade-in"}`}>
+          {modelsData[delayedModel]?.description}
+        </p>
       </div>
     </div>
   );

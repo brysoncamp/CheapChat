@@ -1,17 +1,15 @@
 .sidebar-models {
-
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     padding: 0rem 0.75rem 0.5rem 0.75rem;
     width: 100%;
+    position: relative;
 }
 
 .sidebar-model {
-    background-color: #ffffff;
     padding: 0.25rem 0.5rem;
     border-radius: 1rem;
-
     cursor: pointer;
     height: 2rem;
     display: flex;
@@ -21,6 +19,10 @@
     color: #333;
     transition: color 0.15s ease-in-out;
     overflow: hidden;
+}
+
+.mobile .sidebar-model {
+    width: calc(100% - 0.5rem);
 }
 
 .sidebar-models-closed {
@@ -115,7 +117,14 @@
 
 .new-chat-button:hover .new-chat-model-button img {
     opacity: 1;
-  
+}
+
+.mobile .new-chat-model-button img {
+    opacity: 1;
+}
+
+.mobile .sidebar-model-selected .new-chat-model-button img {
+    filter: none;
 }
 
 .flex-grow {

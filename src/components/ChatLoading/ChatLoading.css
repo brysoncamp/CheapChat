@@ -51,12 +51,22 @@
     padding-top: 4rem;
 }
 
+/*
+.mobile .loading-ai-container {
+    flex-direction: column;
+}*/
+
 .loading-ai-icon-container {
     width: 4.5rem;
     display: flex;
     justify-content: center;
     padding-top: 0.125rem;
 }
+
+/*
+.mobile .loading-ai-icon-container {
+    margin-left: 0;
+}*/
 
 .loading-ai-icon {
     width: 2.25rem;

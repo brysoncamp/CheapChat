@@ -8,6 +8,8 @@ import billingUrl from "./billing.svg";
 import settingsUrl from "./settings.svg";
 import { navigate } from "vike/client/router";
 
+import { isMobile } from "react-device-detect";
+
 import "./Sidebar.css";
 
 const Sidebar = ({ selectedModel, setSelectedModel, resetContent, setRootPage }) => {
@@ -21,6 +23,60 @@ const Sidebar = ({ selectedModel, setSelectedModel, resetContent, setRootPage })
     navigate(`/${page}`);
     setTimeout(() => resetContent(), 0);
   };
+
+  useEffect(() => {
+    if (!isMobile) return;
+
+    if (isClosed) {
+      document.documentElement.scrollLeft = document.documentElement.scrollWidth;
+    } else {
+      document.documentElement.scrollLeft = 0;
+    }
+  }, [isClosed]);
+
+  // use effect for when document is scrolled to the right on mobile set isClosed to true
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+      const scrollWidth = document.documentElement.scrollWidth || document.body.scrollWidth;
+      const clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
+
+      if (scrollLeft > (scrollWidth - clientWidth) / 8) {
+        setIsClosed(true);
+        console.log("scroll left is greater than 1/8 of");
+      }
+
+      if (scrollLeft === 0) {
+        //if (isMobile) return; 
+        // isMobile & text input area is open
+        //if (isMovile )
+
+        // if is mobile and body is position fixed then return
+        if (isMobile && document.body.style.position === "fixed") return;
+
+        setIsClosed(false);
+        console.log(isMobile);
+        console.log("scroll left is 0");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("IS MOBILE", isMobile);
+    if (isMobile) {
+      setTimeout(() => {
+        setIsClosed(true);
+      }, 0);
+    }
+  }, []);
+  
 
   return (
     <>

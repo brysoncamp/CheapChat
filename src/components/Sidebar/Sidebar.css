@@ -11,8 +11,8 @@
     position: relative;
 }
 
-body.mobile .sidebar {
-    width: 90vw;
+.mobile .sidebar {
+    width: min(90vw, 20rem);
 }
 
 .sidebar-scroll-container {
@@ -21,9 +21,12 @@ body.mobile .sidebar {
     flex: 1;
 
 }
-
+/*
 body.mobile .sidebar-scroll-container {
-    width: calc(90vw - 1rem);
+    width: calc(90vw - 2rem);
+}*/
+.mobile .sidebar-scroll-container {
+    width: 100%;
 }
 
 .sidebar-scroll-container-closed {
@@ -86,6 +89,20 @@ body.mobile .sidebar-closed {
     justify-content: flex-end;
 }
 
+.mobile .divider-button {
+    width: 4rem;
+    height: 4rem;
+    margin-left: -1rem;
+    margin-top: -1rem;
+    padding-right: 2rem;
+    padding-left: 2.5rem;
+}
+
+.mobile .sidebar-closed + .divider .divider-button {
+    margin-left: 0rem;
+    padding-left: 0.5rem;
+}
+
 /* Animate divider movement */
 
 .divider:has(.divider-button:hover) .divider-line {
@@ -116,44 +133,56 @@ body.mobile .sidebar-closed {
     transition: transform 0.15s ease-in-out, height 0.15s ease-in-out, left 0.15s ease-in-out;
 }
 
-.line-top {
+/* default straight line arrow */
+
+:not(.mobile) .line-top {
     bottom: 48%;
     transform-origin: bottom center;
     left: 0;
 }
 
-.line-bottom {
+:not(.mobile) .line-bottom {
     top: 48.5%; 
     transform-origin: top center; 
     left: 0;
 }
 
+.mobile .line-top {
+    bottom: 49%;
+}
+
+.mobile .line-bottom {
+    top: 49%; 
+}
+
 /* Closing arrow animation */
 
-.divider-button:hover .line-top {
+:not(.mobile) .divider-button:hover .line-top {
     transform: rotate(45deg);
     height: 10px;
     left: -8px;
     background-color: #717b8a;
 }
 
-.divider-button:hover .line-bottom {
+:not(.mobile) .divider-button:hover .line-bottom {
     transform: rotate(-45deg);
     height: 10px;
     left: -8px;
     background-color: #717b8a;
 }
 
+
+
 /* Opening arrow animation */
 
-.sidebar-closed + .divider .divider-button:hover .line-top {
+:not(.mobile) .sidebar-closed + .divider .divider-button:hover .line-top {
     transform: rotate(-45deg);
     height: 10px;
     left: 14px;
     background-color: #717b8a;
 }
 
-.sidebar-closed + .divider .divider-button:hover .line-bottom {
+:not(.mobile) .sidebar-closed + .divider .divider-button:hover .line-bottom {
     transform: rotate(45deg);
     height: 10px;
     left: 14px;
@@ -198,4 +227,35 @@ body.mobile .sidebar-closed {
     height: 1.125rem; 
     margin-right: 0.25rem;
     margin-left: 0.125rem;
+}
+
+
+/* default to close on mobile */
+
+.mobile :not(.sidebar-closed) + .divider .line-top {
+    transform: rotate(45deg);
+    height: 10px;
+    left: -8px;
+    background-color: #717b8a;
+}
+
+.mobile :not(.sidebar-closed) + .divider .line-bottom {
+    transform: rotate(-45deg);
+    height: 10px;
+    left: -8px;
+    background-color: #717b8a;
+}
+
+.mobile .sidebar-closed + .divider .line-top {
+    background-color: #717b8a;
+    transform: rotate(-45deg);
+    height: 10px;
+    left: 14px;
+}
+
+.mobile .sidebar-closed + .divider .line-bottom {
+    transform: rotate(45deg);
+    height: 10px;
+    left: 14px;
+    background-color: #717b8a;
 }
